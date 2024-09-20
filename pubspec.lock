@@ -233,6 +233,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.3"
+  dart_eval:
+    dependency: "direct main"
+    description:
+      name: dart_eval
+      sha256: "4dd114e350fb24a9fdfef1e93c7f491f6eb1ed34633f102a7c0a34486126b602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.9"
   dart_style:
     dependency: transitive
     description:
@@ -265,6 +273,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  directed_graph:
+    dependency: transitive
+    description:
+      name: directed_graph
+      sha256: fcb45029b4a5089d383b79056b6716d6bf5af79b8e7dbac4b61d26af46410548
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.3"
   equatable:
     dependency: "direct main"
     description:
@@ -273,6 +289,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  eval_annotation:
+    dependency: "direct main"
+    description:
+      name: eval_annotation
+      sha256: "6c385cc57acbbaed784ae7e46b9700e17078aeafba1fbf41dfb68603669ae874"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
+  exception_templates:
+    dependency: transitive
+    description:
+      name: exception_templates
+      sha256: "517f7c770da690073663f867ee2057ae2f4ffb28edae9da9faa624aa29ac76eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   fake_async:
     dependency: transitive
     description:
@@ -326,6 +358,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  flutter_eval:
+    dependency: "direct main"
+    description:
+      name: flutter_eval
+      sha256: "14753a02e17cae2ddc8a0f9f55bde41bc6360a8a771aa058c42df0af590a7cb6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.6"
   flutter_highlight:
     dependency: transitive
     description:
@@ -589,6 +629,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.8.0"
+  lazy_memo:
+    dependency: transitive
+    description:
+      name: lazy_memo
+      sha256: dcb30b4184a6d767e1d779d74ce784d752d38313b8fb4bad6b659ae7af4bb34d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -805,6 +853,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.2"
+  quote_buffer:
+    dependency: transitive
+    description:
+      name: quote_buffer
+      sha256: c4cd07e55ed1b1645a1cc74278a03b2a642c9f6ea3c0528d51827fdd320acf87
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.6"
   riverpod:
     dependency: transitive
     description:

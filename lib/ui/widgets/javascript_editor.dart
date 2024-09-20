@@ -62,6 +62,7 @@ class _JavaScriptEditorState extends State<JavaScriptEditor> {
     final code = _codeController.text;
     final result = _jsRuntime.evaluate(code).stringResult;
     final consoleResult = _jsRuntime.evaluate('consoleLog.join("\\n")');
+
     final r = result != "undefined" ? result : "";
     setState(() {
       _output =

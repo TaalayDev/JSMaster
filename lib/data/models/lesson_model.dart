@@ -1,9 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'dart:async';
+
+import 'package:dart_eval/dart_eval.dart';
+import 'package:dart_eval/dart_eval_bridge.dart';
+import 'package:eval_annotation/eval_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_js/flutter_js.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
-class Lesson extends Equatable {
+class Lesson {
   final String id;
   final String title;
   final String description;
@@ -17,10 +21,10 @@ class Lesson extends Equatable {
     required this.id,
     required this.title,
     required this.description,
-    required this.sections,
     required this.difficulty,
     required this.durationMinutes,
     required this.icon,
+    this.sections = const [],
     this.isCompleted = false,
   });
 
@@ -41,19 +45,32 @@ class Lesson extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        sections,
-        difficulty,
-        durationMinutes,
-        icon,
-        isCompleted,
-      ];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Lesson &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.difficulty == difficulty &&
+        other.durationMinutes == durationMinutes &&
+        other.icon == icon &&
+        other.isCompleted == isCompleted;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        difficulty.hashCode ^
+        durationMinutes.hashCode ^
+        icon.hashCode ^
+        isCompleted.hashCode;
+  }
 }
 
-class LessonSection extends Equatable {
+class LessonSection {
   final String content;
   final String? codeExample;
   final List<Exercise> exercises;
@@ -77,19 +94,33 @@ class LessonSection extends Equatable {
   }
 
   @override
-  List<Object?> get props => [content, codeExample, exercises];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is LessonSection &&
+        other.content == content &&
+        other.codeExample == codeExample &&
+        listEquals(other.exercises, exercises);
+  }
+
+  @override
+  int get hashCode {
+    return content.hashCode ^ codeExample.hashCode ^ exercises.hashCode;
+  }
 }
 
-class Exercise extends Equatable {
+class Exercise {
   final String question;
   final String initialCode;
+  final String validate;
   final Future<bool> Function(JavascriptRuntime, String code)? validator;
   final bool isCompleted;
 
   const Exercise({
     required this.question,
     required this.initialCode,
-    required this.validator,
+    required this.validate,
+    this.validator,
     this.isCompleted = false,
   });
 
@@ -100,10 +131,27 @@ class Exercise extends Equatable {
       question: question,
       initialCode: initialCode,
       validator: validator,
+      validate: validate,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 
   @override
-  List<Object?> get props => [question, initialCode, isCompleted];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Exercise &&
+        other.question == question &&
+        other.initialCode == initialCode &&
+        other.isCompleted == isCompleted &&
+        other.validate == validate;
+  }
+
+  @override
+  int get hashCode {
+    return question.hashCode ^
+        initialCode.hashCode ^
+        isCompleted.hashCode ^
+        validate.hashCode;
+  }
 }

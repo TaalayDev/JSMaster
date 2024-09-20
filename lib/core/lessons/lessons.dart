@@ -2,8 +2,14 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import '../../data.dart';
 
+String validator(String code, String check) => '''
+  $code
+
+  $check
+''';
+
 final List<Lesson> lessonsList = [
-  Lesson(
+  const Lesson(
     id: '1',
     title: 'Introduction to JavaScript',
     description:
@@ -42,11 +48,12 @@ console.log('This is a multi-line comment example');
             question:
                 'Write a program that prints "Welcome to JavaScript" to the console.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('consoleLog.join("\\n")');
-              return result.stringResult.contains('Welcome to JavaScript');
-            },
+            validate: '''
+              const isValid = (function() {
+                const logs = consoleLog.join('\\n');
+                return logs === 'Welcome to JavaScript';
+              })();
+            ''',
           ),
         ],
       ),
@@ -55,7 +62,7 @@ console.log('This is a multi-line comment example');
     durationMinutes: 15,
     icon: Feather.book_open,
   ),
-  Lesson(
+  const Lesson(
     id: '2',
     title: 'Variables and Constants',
     description:
@@ -103,22 +110,21 @@ console.log(name); // Output: John
             question:
                 'Declare a variable named "score" and assign it the value 100.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('score === 100');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return score === 100;
+              })();
+            ''',
           ),
           Exercise(
             question:
                 'Declare a constant named "MAX_LEVEL" and assign it the value 50.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('MAX_LEVEL === 50');
-              return result.stringResult == 'true' &&
-                  code.contains('const MAX_LEVEL');
-            },
+            validate: '''
+              const isValid = (function() {
+                return MAX_LEVEL === 50 && /const MAX_LEVEL/.test(code);
+              })();
+            ''',
           ),
         ],
       ),
@@ -165,15 +171,28 @@ var temp = 72; // Use 'let' instead
 
 // Write your if statement here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasLet = code.contains('let') && code.contains('=');
-              final hasConst = code.contains('const') && code.contains('=');
-              final hasIf = code.contains('if') &&
-                  code.contains('{') &&
-                  code.contains('}');
-              return hasLet && hasConst && hasIf;
-            },
+            validate: '''
+              const isValid = (function() {
+                let varMatch = code.match(/let (\\w+) =/);
+                let constMatch = code.match(/const (\\w+) =/);
+
+                if (!varMatch || !constMatch) return false;
+
+                let varName = varMatch[1];
+                let constName = constMatch[1];
+
+                let varValue = eval(varName);
+                let constValue = eval(constName);
+
+                let isVarNumber = typeof varValue === 'number';
+                let isConstNumber = typeof constValue === 'number';
+
+                let isIfStatement = /if \\(.+?\\) {/.test(code);
+                let isConditionCorrect = code.includes(\`if (\${varName} >= \${constName})\`);
+
+                return isVarNumber && isConstNumber && isIfStatement && isConditionCorrect;
+              })();
+            ''',
           ),
         ],
       ),
@@ -182,7 +201,7 @@ var temp = 72; // Use 'let' instead
     durationMinutes: 25,
     icon: Feather.database,
   ),
-  Lesson(
+  const Lesson(
     id: '3',
     title: 'Data Types and Structures',
     description:
@@ -236,21 +255,21 @@ console.log(typeof salary);    // "object" (this is a quirk in JavaScript)
             question:
                 'Declare a variable called "temperature" and assign it the value 72.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('temperature === 72');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return temperature === 72;
+              })();
+            ''',
           ),
           Exercise(
             question:
                 'Create a string variable called "city" with the value "New York".',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('city === "New York"');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return city === "New York";
+              })();
+            ''',
           ),
         ],
       ),
@@ -299,25 +318,21 @@ console.log(person.city);  // "London"
             question:
                 'Create an array called "colors" with three color names of your choice.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final length = runtime.evaluate('colors.length').stringResult;
-              return length == '3' && code.contains('[') && code.contains(']');
-            },
+            validate: '''
+              const isValid = (function() {
+                return colors.length === 3 && Array.isArray(colors);
+              })();
+            ''',
           ),
           Exercise(
             question:
                 'Create an object called "book" with properties for title and author.',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasTitle =
-                  runtime.evaluate('book.hasOwnProperty("title")').stringResult;
-              final hasAuthor = runtime
-                  .evaluate('book.hasOwnProperty("author")')
-                  .stringResult;
-              return hasTitle == 'true' && hasAuthor == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return book.hasOwnProperty("title") && book.hasOwnProperty("author");
+              })();
+            ''',
           ),
         ],
       ),
@@ -326,7 +341,7 @@ console.log(person.city);  // "London"
     durationMinutes: 25,
     icon: Feather.layers,
   ),
-  Lesson(
+  const Lesson(
     id: '4',
     title: 'Operators and Expressions',
     description:
@@ -392,11 +407,11 @@ console.log(x);  // 11
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('result === 3');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return result === 3 && /let result = num1 % num2/.test(code);
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -404,11 +419,14 @@ console.log(x);  // 11
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('count === 33');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return count === 33 
+                  && /let count = 10;/.test(code) 
+                  && /count\+\+/.test(code) 
+                  && (/count \*= 3/.test(code) || /count \* 3/.test(code));
+              })();
+            ''',
           ),
         ],
       ),
@@ -467,11 +485,14 @@ console.log(canAccess);  // true
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('isStrictlyEqual === false');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return isStrictlyEqual === false 
+                  && /===/.test(code) 
+                  && num === 10 
+                  && text === "10";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -479,11 +500,14 @@ console.log(canAccess);  // true
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('niceWeather === true');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return niceWeather === true 
+                  && /\\|\\|/.test(code) 
+                  && isSunny === true 
+                  && isWarm === false;
+              })();
+            ''',
           ),
         ],
       ),
@@ -492,7 +516,7 @@ console.log(canAccess);  // true
     durationMinutes: 30,
     icon: Feather.plus,
   ),
-  Lesson(
+  const Lesson(
     id: '5',
     title: 'Working with Strings',
     description:
@@ -540,11 +564,11 @@ console.log(message);  // "Welcome, Alice!"
             question:
                 'Create a string variable called "language" with the value "JavaScript".',
             initialCode: '// Write your code here',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('language === "JavaScript"');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return language === "JavaScript";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -553,12 +577,12 @@ console.log(message);  // "Welcome, Alice!"
 let language = "JavaScript";
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate('learningMessage === "I am learning JavaScript!"');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return learningMessage === "I am learning JavaScript!"
+                  && (/\\+/.test(code) || /\\\$\\{language\\}/.test(code));
+              })();
+            ''',
           ),
         ],
       ),
@@ -605,12 +629,11 @@ console.log(result);  // "hello, javascript!"
 let email = "   USER@EXAMPLE.COM   ";
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result =
-                  runtime.evaluate('cleanEmail === "user@example.com"');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return cleanEmail === "user@example.com" && /trim/.test(code) && /toLowerCase/.test(code);
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -619,12 +642,11 @@ let email = "   USER@EXAMPLE.COM   ";
 let phrase = "JavaScript is awesome";
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result =
-                  runtime.evaluate('newPhrase === "JavaScript is amazing"');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return newPhrase === "JavaScript is amazing" && /replace/.test(code);
+              })();
+            ''',
           ),
         ],
       ),
@@ -633,7 +655,7 @@ let phrase = "JavaScript is awesome";
     durationMinutes: 25,
     icon: Feather.type,
   ),
-  Lesson(
+  const Lesson(
     id: '6',
     title: 'Numbers and the Math Object',
     description:
@@ -685,11 +707,11 @@ console.log(0.1 + 0.2 === 0.3);  // false
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('Math.abs(area - 22.5) < 0.0001');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return Math.abs(area - 22.5) < 0.0001;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -697,11 +719,11 @@ console.log(0.1 + 0.2 === 0.3);  // false
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate('oddOrEven === 1');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return oddOrEven === 1 && /%/.test(code);
+              })();
+            ''',
           ),
         ],
       ),
@@ -753,12 +775,12 @@ console.log(randomInt);  // Random integer between 1 and 10
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate(
-                  'Math.abs(circleArea - 78.53981633974483) < 0.0001');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return Math.abs(circleArea - 78.53981633974483) < 0.0001
+                  && /Math.PI/.test(code);
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -766,12 +788,14 @@ console.log(randomInt);  // Random integer between 1 and 10
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime.evaluate(
-                  'randomNumber >= 1 && randomNumber <= 100 && Math.floor(randomNumber) === randomNumber');
-              return result.stringResult == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return randomNumber >= 1 
+                  && randomNumber <= 100 
+                  && Math.floor(randomNumber) === randomNumber
+                  && /Math.random/.test(code);
+              })();
+            ''',
           ),
         ],
       ),
@@ -843,13 +867,11 @@ console.log(message);
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('if') &&
-                  (logs.contains('You are an adult') || logs.isEmpty);
-            },
+            validate: '''
+              const isValid = (function() {
+                return ((consoleLog.join(",") === "You are an adult" && age >= 18) || consoleLog.join(",") === "");
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -857,19 +879,16 @@ console.log(message);
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('if') &&
-                  code.contains('else if') &&
-                  code.contains('else') &&
-                  (logs.contains('A') ||
-                      logs.contains('B') ||
-                      logs.contains('C') ||
-                      logs.contains('D') ||
-                      logs.contains('F'));
-            },
+            validate: '''
+              const isValid = (function() {
+                if (score < 0 || score > 100) return false;
+                return (consoleLog.join(",") === "A" && score >= 90)
+                  || (consoleLog.join(",") === "B" && score >= 80 && score <= 89)
+                  || (consoleLog.join(",") === "C" && score >= 70 && score <= 79)
+                  || (consoleLog.join(",") === "D" && score >= 60 && score <= 69)
+                  || (consoleLog.join(",") === "F" && score < 60);
+              })();
+            ''',
           ),
         ],
       ),
@@ -944,18 +963,15 @@ console.log(fruit_type);  // Output: pomaceous fruit
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('switch') &&
-                  code.contains('case') &&
-                  code.contains('break') &&
-                  (logs.contains('Spring') ||
-                      logs.contains('Summer') ||
-                      logs.contains('Autumn') ||
-                      logs.contains('Winter'));
-            },
+            validate: '''
+              const isValid = (function() {
+                if (month < 1 || month > 12) return false;
+                return (consoleLog.join(",") === "Spring" && month >= 3 && month <= 5)
+                  || (consoleLog.join(",") === "Summer" && month >= 6 && month <= 8)
+                  || (consoleLog.join(",") === "Autumn" && month >= 9 && month <= 11)
+                  || (consoleLog.join(",") === "Winter" && (month === 12 || month === 1 || month === 2));
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -963,19 +979,11 @@ console.log(fruit_type);  // Output: pomaceous fruit
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('switch') &&
-                  code.contains('case') &&
-                  code.contains('break') &&
-                  code.contains('default') &&
-                  (logs.contains('Stop') ||
-                      logs.contains('Slow down') ||
-                      logs.contains('Go') ||
-                      logs.contains('Invalid signal'));
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(",") === "Stop" || consoleLog.join(",") === "Slow down" || consoleLog.join(",") === "Go" || consoleLog.join(",") === "Invalid signal";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1053,12 +1061,11 @@ for (let i = 0; i < 5; i++) {
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('for') && logs == '0,2,4,6,8,10';
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(",") === "0,2,4,6,8,10";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1067,14 +1074,11 @@ for (let i = 0; i < 5; i++) {
 let colors = ['red', 'blue', 'green', 'yellow', 'purple'];
 // Write your loop here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('for') &&
-                  code.contains('continue') &&
-                  logs == 'red,blue,yellow,purple';
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(",") === "red,blue,yellow,purple";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1129,12 +1133,11 @@ while (x < 5) {
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('while') && logs == '1,3,5,7,9';
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(",") === "1,3,5,7,9";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1142,14 +1145,11 @@ while (x < 5) {
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return code.contains('do') &&
-                  code.contains('while') &&
-                  logs == '5,4,3,2,1';
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(",") === "5,4,3,2,1";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1226,14 +1226,11 @@ console.log(compareNumbers(4, 4));  // Output: a and b are equal
             initialCode: '''
 // Write your function here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result1 = runtime.evaluate('isEven(4)').stringResult;
-              final result2 = runtime.evaluate('isEven(7)').stringResult;
-              return code.contains('function isEven') &&
-                  result1 == 'true' &&
-                  result2 == 'false';
-            },
+            validate: '''
+              const isValid = (function() {
+                return isEven(4) === true && isEven(7) === false;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1241,13 +1238,11 @@ console.log(compareNumbers(4, 4));  // Output: a and b are equal
             initialCode: '''
 // Write your function here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result =
-                  runtime.evaluate('getFullName("John", "Doe")').stringResult;
-              return code.contains('function getFullName') &&
-                  result == '"John Doe"';
-            },
+            validate: '''
+              const isValid = (function() {
+                return getFullName("John", "Doe") === "John Doe";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1305,12 +1300,11 @@ console.log(evenNumbers);  // Output: [2, 4]
             initialCode: '''
 // Write your arrow function here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result1 = runtime.evaluate('square(4)').stringResult;
-              final result2 = runtime.evaluate('square(3)').stringResult;
-              return code.contains('=>') && result1 == '16' && result2 == '9';
-            },
+            validate: '''
+              const isValid = (function() {
+                return square(4) === 16 && square(3) === 9;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1319,15 +1313,11 @@ console.log(evenNumbers);  // Output: [2, 4]
 let numbers = [2, 8, 4, 10, 1, 7];
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate('JSON.stringify(filteredNumbers)')
-                  .stringResult;
-              return code.contains('filter') &&
-                  code.contains('=>') &&
-                  result == '[8,10,7]';
-            },
+            validate: '''
+              const isValid = (function() {
+                return JSON.stringify(filteredNumbers) === "[8,10,7]";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1401,12 +1391,11 @@ console.log(hasOrange);  // Output: true
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final length = runtime.evaluate('colors.length').stringResult;
-              final thirdColor = runtime.evaluate('colors[2]').stringResult;
-              return length == '5' && thirdColor == '"purple"';
-            },
+            validate: '''
+              const isValid = (function() {
+                return colors.length === 5 && colors[2] === "purple";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1415,13 +1404,11 @@ console.log(hasOrange);  // Output: true
 // Assuming colors array exists
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final firstColor = runtime.evaluate('colors[0]').stringResult;
-              final lastColor =
-                  runtime.evaluate('colors[colors.length - 1]').stringResult;
-              return firstColor == '"black"' && lastColor == '"pink"';
-            },
+            validate: '''
+              const isValid = (function() {
+                return colors[0] === "black" && colors[colors.length - 1] === "pink";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1485,12 +1472,11 @@ console.log(result);  // Output: 18 (2*3 + 4*3)
 let nums = [1, 2, 3, 4, 5];
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result =
-                  runtime.evaluate('JSON.stringify(squaredNums)').stringResult;
-              return code.contains('map') && result == '[1,4,9,16,25]';
-            },
+            validate: '''
+              const isValid = (function() {
+                return JSON.stringify(squaredNums) === "[1,4,9,16,25]";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1499,13 +1485,11 @@ let nums = [1, 2, 3, 4, 5];
 let words = ['cat', 'dog', 'elephant', 'fish', 'giraffe'];
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result =
-                  runtime.evaluate('JSON.stringify(longWords)').stringResult;
-              return code.contains('filter') &&
-                  result == '["elephant","fish","giraffe"]';
-            },
+            validate: '''
+              const isValid = (function() {
+                return JSON.stringify(longWords) === '["elephant","fish","giraffe"]';
+              })();
+            ''',
           ),
         ],
       ),
@@ -1593,15 +1577,11 @@ console.log(calculator.subtract(10, 4));  // Output: 6
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasProperties = runtime
-                  .evaluate(
-                      'book.hasOwnProperty("title") && book.hasOwnProperty("author") && ' +
-                          'book.hasOwnProperty("year") && book.hasOwnProperty("genre")')
-                  .stringResult;
-              return hasProperties == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return book.hasOwnProperty("title") && book.hasOwnProperty("author") && book.hasOwnProperty("year") && book.hasOwnProperty("genre");
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1609,17 +1589,11 @@ console.log(calculator.subtract(10, 4));  // Output: 6
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasMethod = runtime
-                  .evaluate('typeof circle.area === "function"')
-                  .stringResult;
-              final correctArea = runtime
-                  .evaluate(
-                      'Math.abs(circle.area() - (3.14 * circle.radius * circle.radius)) < 0.01')
-                  .stringResult;
-              return hasMethod == 'true' && correctArea == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return typeof circle.area === "function" && Math.abs(circle.area() - (3.14 * circle.radius * circle.radius)) < 0.01;
+              })();
+            ''',
           ),
         ],
       ),
@@ -1686,18 +1660,11 @@ printPerson(person);  // Output: Alice is 28 years old.
 let student = {name: "Emma", age: 20, grades: [85, 90, 92]};
 // Write your destructuring code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final nameCorrect =
-                  runtime.evaluate('name === "Emma"').stringResult;
-              final ageCorrect = runtime.evaluate('age === 20').stringResult;
-              final gradesCorrect = runtime
-                  .evaluate('JSON.stringify(grades) === "[85,90,92]"')
-                  .stringResult;
-              return nameCorrect == 'true' &&
-                  ageCorrect == 'true' &&
-                  gradesCorrect == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return name === "Emma" && age === 20 && JSON.stringify(grades) === "[85,90,92]";
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1705,14 +1672,11 @@ let student = {name: "Emma", age: 20, grades: [85, 90, 92]};
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate(
-                      'person.name && person.age && person.job && person.company')
-                  .stringResult;
-              return result == 'true' && code.contains('...');
-            },
+            validate: '''
+              const isValid = (function() {
+                return person.name && person.age && person.job && person.company;
+              })();
+            ''',
           ),
         ],
       ),
@@ -1799,14 +1763,15 @@ step1(() => {
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasFunction = runtime
-                  .evaluate('typeof delayedGreeting === "function"')
-                  .stringResult;
-              final usesTimeout = code.contains('setTimeout');
-              return hasFunction == 'true' && usesTimeout;
-            },
+            validate: '''
+              const isValid = (function() {
+                let result;
+                delayedGreeting("Alice", (message) => {
+                  result = message;
+                });
+                return result === "Hello, Alice!";
+              })();
+            ''',
           ),
         ],
       ),
@@ -1897,18 +1862,11 @@ runSteps();
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasFunction = runtime
-                  .evaluate('typeof delayedMultiply === "function"')
-                  .stringResult;
-              final returnsPromise = runtime
-                  .evaluate('delayedMultiply(2, 3) instanceof Promise')
-                  .stringResult;
-              return hasFunction == 'true' &&
-                  returnsPromise == 'true' &&
-                  code.contains('setTimeout');
-            },
+            validate: '''
+              const isValid = (function() {
+                return delayedMultiply(2, 3) instanceof Promise;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -1917,22 +1875,13 @@ runSteps();
 // Assume delayedMultiply function exists
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate('''
-              function delayedMultiply(a, b) {
-                return new Promise(resolve => {
-                  setTimeout(() => resolve(a * b), 1000);
-                });
-              }
-            ''');
-              runtime.evaluate(code);
-              final hasFunction = runtime
-                  .evaluate('typeof runMultiplication === "function"')
-                  .stringResult;
-              final usesAsyncAwait =
-                  code.contains('async') && code.contains('await');
-              return hasFunction == 'true' && usesAsyncAwait;
-            },
+            validate: '''
+              const isValid = (function() {
+                let result;
+                runMultiplication().then(res => result = res);
+                return result === 24;
+              })();
+            ''',
           ),
         ],
       ),
@@ -2031,15 +1980,11 @@ greet('Alice'); // Hello, Alice!
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasArrowFunction = code.contains('=>');
-              final usesConst = code.contains('const PI');
-              final result = runtime
-                  .evaluate('Math.abs(calculateArea(5) - 78.53975) < 0.0001')
-                  .stringResult;
-              return hasArrowFunction && usesConst && result == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return Math.abs(calculateArea(5) - 78.53975) < 0.0001;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -2048,19 +1993,11 @@ greet('Alice'); // Hello, Alice!
 const person = { name: "John", age: 30, city: "New York" };
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final usesDestructuring = code.contains('{') &&
-                  code.contains('}') &&
-                  code.contains('person');
-              final usesTemplateLiteral =
-                  code.contains('`') && code.contains('\${');
-              final logs =
-                  runtime.evaluate('consoleLog.join(",")').stringResult;
-              return usesDestructuring &&
-                  usesTemplateLiteral &&
-                  logs.contains('John is 30 years old');
-            },
+            validate: '''
+              const isValid = (function() {
+                return consoleLog.join(" ").includes("John is 30 years old");
+              })();
+            ''',
           ),
         ],
       ),
@@ -2134,26 +2071,11 @@ console.log(entries); // [['a', 1], ['b', 2], ['c', 3], ['d', 4]]
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasClasses = code.contains('class Rectangle') &&
-                  code.contains('class Square extends Rectangle');
-              final hasConstructor = code.contains('constructor');
-              final hasAreaMethod = code.contains('area()');
-              final rectangleWorks = runtime
-                      .evaluate('new Rectangle(4, 5).area() === 20')
-                      .stringResult ==
-                  'true';
-              final squareWorks = runtime
-                      .evaluate('new Square(4).area() === 16')
-                      .stringResult ==
-                  'true';
-              return hasClasses &&
-                  hasConstructor &&
-                  hasAreaMethod &&
-                  rectangleWorks &&
-                  squareWorks;
-            },
+            validate: '''
+              const isValid = (function() {
+                return new Rectangle(4, 5).area() === 20 && new Square(4).area() === 16;
+              })();
+            ''',
           ),
           Exercise(
             question:
@@ -2162,16 +2084,11 @@ console.log(entries); // [['a', 1], ['b', 2], ['c', 3], ['d', 4]]
 const numbers = [5, 12, 8, 130, 44];
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final usesFind = code.contains('find(');
-              final usesFindIndex = code.contains('findIndex(');
-              final findResult =
-                  runtime.evaluate('foundNumber === 12').stringResult == 'true';
-              final findIndexResult =
-                  runtime.evaluate('foundIndex === 1').stringResult == 'true';
-              return usesFind && usesFindIndex && findResult && findIndexResult;
-            },
+            validate: '''
+              const isValid = (function() {
+                return foundNumber === 12 && foundIndex === 1;
+              })();
+            ''',
           ),
         ],
       ),
@@ -2266,26 +2183,16 @@ try {
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasFunction = runtime
-                      .evaluate('typeof squareRoot === "function"')
-                      .stringResult ==
-                  'true';
-              final throwsError = runtime.evaluate('''
-              try {
-                squareRoot(-4);
-                false;
-              } catch (e) {
-                e.message === "Cannot calculate square root of a negative number";
-              }
-            ''').stringResult == 'true';
-              final worksForPositive = runtime
-                      .evaluate('Math.abs(squareRoot(4) - 2) < 0.0001')
-                      .stringResult ==
-                  'true';
-              return hasFunction && throwsError && worksForPositive;
-            },
+            validate: '''
+              const isValid = (function() {
+                try {
+                  squareRoot(-4);
+                  return false;
+                } catch (e) {
+                  return e.message === "Cannot calculate square root of a negative number";
+                }
+              })();
+            ''',
           ),
         ],
       ),
@@ -2367,15 +2274,16 @@ fetchDataAsync();
             initialCode: '''
 // Write your code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasAsyncFunction =
-                  code.contains('async') && code.contains('function fetchUser');
-              final usesPromise = code.contains('new Promise');
-              final usesTryCatch =
-                  code.contains('try') && code.contains('catch');
-              return hasAsyncFunction && usesPromise && usesTryCatch;
-            },
+            validate: '''
+              const isValid = (function() {
+                try {
+                  fetchUser('abc');
+                  return false;
+                } catch (e) {
+                  return e.message === "Invalid user id";
+                }
+              })();
+            ''',
           ),
         ],
       ),
@@ -2460,20 +2368,12 @@ let invalidJSON = {
 // Write your JSON object here
 let book = 
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasProperties = runtime
-                      .evaluate(
-                          'book.title && book.author && book.year && Array.isArray(book.chapters)')
-                      .stringResult ==
-                  'true';
-              final chaptersValid = runtime
-                      .evaluate(
-                          'book.chapters.every(ch => ch.title && typeof ch.pages === "number")')
-                      .stringResult ==
-                  'true';
-              return hasProperties && chaptersValid;
-            },
+            validate: '''
+              const isValid = (function() {
+                return book.title && book.author && book.year && Array.isArray(book.chapters) &&
+                  book.chapters.every(ch => ch.title && typeof ch.pages === "number");
+              })();
+            ''',
           ),
         ],
       ),
@@ -2578,15 +2478,11 @@ let data = [
 
 console.log(filterAndStringify(data, "name"));
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate('filterAndStringify(data, "name")')
-                  .stringResult;
-              final expectedResult =
-                  '[{"id":1,"name":"Alice"},{"id":3,"name":"Bob","age":25}]';
-              return result == expectedResult;
-            },
+            validate: '''
+              const isValid = (function() {
+                return filterAndStringify(data, "name") === '[{"id":1,"name":"Alice"},{"id":3,"name":"Bob","age":25}]';
+              })();
+            ''',
           ),
         ],
       ),
@@ -2666,24 +2562,11 @@ console.log(endBye.test("Goodbye"));    // true
             initialCode: '''
 // Write your regex and tests here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final javaScriptMatch =
-                  runtime.evaluate('regex.test("JavaScript")').stringResult ==
-                      'true';
-              final javaMatch =
-                  runtime.evaluate('regex.test("Java")').stringResult == 'true';
-              final javaBeansMatch =
-                  runtime.evaluate('regex.test("JavaBeans")').stringResult ==
-                      'true';
-              final pythonNoMatch =
-                  runtime.evaluate('regex.test("Python")').stringResult ==
-                      'false';
-              return javaScriptMatch &&
-                  javaMatch &&
-                  javaBeansMatch &&
-                  pythonNoMatch;
-            },
+            validate: '''
+              const isValid = (function() {
+                return regex.test("JavaScript") && regex.test("Java") && regex.test("JavaBeans") && !regex.test("Python");
+              })();
+            ''',
           ),
         ],
       ),
@@ -2757,13 +2640,11 @@ function extractPhoneNumbers(text) {
 let text = "Call me at (123) 456-7890 or (987) 654-3210";
 console.log(extractPhoneNumbers(text));
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate('JSON.stringify(extractPhoneNumbers(text))')
-                  .stringResult;
-              return result == '["(123) 456-7890","(987) 654-3210"]';
-            },
+            validate: '''
+              const isValid = (function() {
+                return JSON.stringify(extractPhoneNumbers(text)) === '["(123) 456-7890","(987) 654-3210"]';
+              })();
+            ''',
           ),
         ],
       ),
@@ -2839,18 +2720,12 @@ console.log(updatedPerson);  // { name: "Alice", age: 31 }
             initialCode: '''
 // Write your function here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result1 = runtime
-                  .evaluate(
-                      'Math.abs(calculateCircleArea(5) - 78.53981633974483) < 0.0001')
-                  .stringResult;
-              final result2 = runtime
-                  .evaluate(
-                      'Math.abs(calculateCircleArea(3) - 28.274333882308138) < 0.0001')
-                  .stringResult;
-              return result1 == 'true' && result2 == 'true';
-            },
+            validate: '''
+              const isValid = (function() {
+                return Math.abs(calculateCircleArea(5) - 78.53981633974483) < 0.0001 &&
+                  Math.abs(calculateCircleArea(3) - 28.274333882308138) < 0.0001;
+              })();
+            ''',
           ),
         ],
       ),
@@ -2936,13 +2811,11 @@ function repeat(func, n) {
 // const doubleAndRepeat = repeat(x => x * 2, 3);
 // console.log(doubleAndRepeat(5));  // Should output [10, 20, 40]
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final result = runtime
-                  .evaluate('JSON.stringify(repeat(x => x * 2, 3)(5))')
-                  .stringResult;
-              return result == '[10,20,40]';
-            },
+            validate: '''
+              const isValid = (function() {
+                return JSON.stringify(repeat(x => x * 2, 3)(5)) === '[10,20,40]';
+              })();
+            ''',
           ),
         ],
       ),
@@ -3042,28 +2915,13 @@ console.log(account.getBalance()); // 50
             initialCode: '''
 // Write your class and code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasClass = runtime
-                      .evaluate('typeof Rectangle === "function"')
-                      .stringResult ==
-                  'true';
-              final hasInstance = runtime
-                      .evaluate('rectangle instanceof Rectangle')
-                      .stringResult ==
-                  'true';
-              final correctArea = runtime
-                      .evaluate(
-                          'rectangle.calculateArea() === rectangle.width * rectangle.height')
-                      .stringResult ==
-                  'true';
-              final correctPerimeter = runtime
-                      .evaluate(
-                          'rectangle.calculatePerimeter() === 2 * (rectangle.width + rectangle.height)')
-                      .stringResult ==
-                  'true';
-              return hasClass && hasInstance && correctArea && correctPerimeter;
-            },
+            validate: '''
+              const isValid = (function() {
+                return rectangle instanceof Rectangle &&
+                  rectangle.calculateArea() === rectangle.width * rectangle.height &&
+                  rectangle.calculatePerimeter() === 2 * (rectangle.width + rectangle.height);
+              })();
+            ''',
           ),
         ],
       ),
@@ -3152,43 +3010,13 @@ console.log(MathOperations.add(5, 3)); // 8
             initialCode: '''
 // Write your classes and code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasShape = runtime
-                      .evaluate('typeof Shape === "function"')
-                      .stringResult ==
-                  'true';
-              final hasCircle = runtime
-                      .evaluate(
-                          'typeof Circle === "function" && Circle.prototype instanceof Shape')
-                      .stringResult ==
-                  'true';
-              final hasSquare = runtime
-                      .evaluate(
-                          'typeof Square === "function" && Square.prototype instanceof Shape')
-                      .stringResult ==
-                  'true';
-              final correctCircleArea = runtime
-                      .evaluate(
-                          'Math.abs(new Circle(5).calculateArea() - 78.54) < 0.01')
-                      .stringResult ==
-                  'true';
-              final correctSquareArea = runtime
-                      .evaluate('new Square(4).calculateArea() === 16')
-                      .stringResult ==
-                  'true';
-              final hasTotalArea = runtime
-                      .evaluate(
-                          'typeof totalArea === "number" && totalArea > 0')
-                      .stringResult ==
-                  'true';
-              return hasShape &&
-                  hasCircle &&
-                  hasSquare &&
-                  correctCircleArea &&
-                  correctSquareArea &&
-                  hasTotalArea;
-            },
+            validate: '''
+              const isValid = (function() {
+                return Math.abs(new Circle(5).calculateArea() - 78.54) < 0.01 &&
+                  new Square(4).calculateArea() === 16 &&
+                  typeof totalArea === "number" && totalArea > 0;
+              })();
+            ''',
           ),
         ],
       ),
@@ -3275,20 +3103,12 @@ const prefs = { theme: 'dark', fontSize: 16 };
 saveUserPreferences(prefs);
 console.log(getUserPreferences());
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final savedCorrectly = runtime
-                      .evaluate(
-                          'localStorage.getItem("userPreferences") === \'{"theme":"dark","fontSize":16}\'')
-                      .stringResult ==
-                  'true';
-              final retrievedCorrectly = runtime
-                      .evaluate(
-                          'JSON.stringify(getUserPreferences()) === \'{"theme":"dark","fontSize":16}\'')
-                      .stringResult ==
-                  'true';
-              return savedCorrectly && retrievedCorrectly;
-            },
+            validate: '''
+              const isValid = (function() {
+                return localStorage.getItem("userPreferences") === '{"theme":"dark","fontSize":16}' &&
+                  JSON.stringify(getUserPreferences()) === '{"theme":"dark","fontSize":16}';
+              })();
+            ''',
           ),
         ],
       ),
@@ -3403,24 +3223,13 @@ cart.displayCart();
 cart.clearCart();
 cart.displayCart();
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final addWorks = runtime
-                      .evaluate(
-                          'localStorage.getItem("shoppingCart").includes("Banana")')
-                      .stringResult ==
-                  'true';
-              final removeWorks = runtime
-                      .evaluate(
-                          '!localStorage.getItem("shoppingCart").includes("Apple")')
-                      .stringResult ==
-                  'true';
-              final clearWorks = runtime
-                      .evaluate('localStorage.getItem("shoppingCart") === "[]"')
-                      .stringResult ==
-                  'true';
-              return addWorks && removeWorks && clearWorks;
-            },
+            validate: '''
+              const isValid = (function() {
+                return localStorage.getItem("shoppingCart").includes("Banana") &&
+                  !localStorage.getItem("shoppingCart").includes("Apple") &&
+                  localStorage.getItem("shoppingCart") === "[]";
+              })();
+            ''',
           ),
         ],
       ),
@@ -3496,27 +3305,13 @@ dog.speak();  // Output: Rex makes a sound.
             initialCode: '''
 // Write your class and code here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasClass = runtime
-                      .evaluate('typeof Rectangle === "function"')
-                      .stringResult ==
-                  'true';
-              final hasInstance =
-                  runtime.evaluate('rect instanceof Rectangle').stringResult ==
-                      'true';
-              final areaCorrect = runtime
-                      .evaluate(
-                          'rect.calculateArea() === rect.width * rect.height')
-                      .stringResult ==
-                  'true';
-              final perimeterCorrect = runtime
-                      .evaluate(
-                          'rect.calculatePerimeter() === 2 * (rect.width + rect.height)')
-                      .stringResult ==
-                  'true';
-              return hasClass && hasInstance && areaCorrect && perimeterCorrect;
-            },
+            validate: '''
+              const isValid = (function() {
+                return rect instanceof Rectangle &&
+                  rect.calculateArea() === rect.width * rect.height &&
+                  rect.calculatePerimeter() === 2 * (rect.width + rect.height);
+              })();
+            ''',
           ),
         ],
       ),
@@ -3630,26 +3425,13 @@ console.log(account.getBalance());  // Output: 100
             initialCode: '''
 // Write your classes here
 ''',
-            validator: (runtime, code) async {
-              runtime.evaluate(code);
-              final hasVehicle = runtime
-                      .evaluate('typeof Vehicle === "function"')
-                      .stringResult ==
-                  'true';
-              final hasCar = runtime
-                      .evaluate(
-                          'typeof Car === "function" && Car.prototype instanceof Vehicle')
-                      .stringResult ==
-                  'true';
-              final carWorks = runtime.evaluate('''
-              (() => {
+            validate: '''
+              const isValid = (function() {
                 const car = new Car('Toyota', 'Corolla', 4);
                 const info = car.displayInfo();
                 return info.includes('Toyota') && info.includes('Corolla') && info.includes('4');
-              })()
-            ''').stringResult == 'true';
-              return hasVehicle && hasCar && carWorks;
-            },
+              })();
+            ''',
           ),
         ],
       ),
@@ -3757,20 +3539,14 @@ return b*c
 const x=calc(5,3,2)
 console.log(x)
 ''',
-            validator: (runtime, code) async {
-              // This validation is more subjective, so we'll check for key improvements
-              final usesSpaces = code.contains(' = ') && code.contains(' > ');
-              final usesDescriptiveNames =
-                  code.toLowerCase().contains('calculate') ||
-                      code.toLowerCase().contains('multiply');
-              final usesConsistentIndentation =
-                  code.contains('  ') || code.contains('    ');
-              final usesSemicolons = code.contains(';');
-              return usesSpaces &&
-                  usesDescriptiveNames &&
-                  usesConsistentIndentation &&
-                  usesSemicolons;
-            },
+            validate: '''
+              const isValid = (function() {
+                return code.includes(' = ') && code.includes(' > ') &&
+                  (code.toLowerCase().includes('calculate') || code.toLowerCase().includes('multiply')) &&
+                  (code.includes('  ') || code.includes('    ')) &&
+                  code.includes(';');
+              })();
+            ''',
           ),
         ],
       ),
@@ -3911,21 +3687,15 @@ function processData(data) {
   return result;
 }
 ''',
-            validator: (runtime, code) async {
-              // Check for key improvements
-              final usesConst = code.contains('const');
-              final usesLet = code.contains('let') && !code.contains('var');
-              final usesArrayMethods =
-                  code.contains('.map(') || code.contains('.filter(');
-              final usesErrorHandling =
-                  code.contains('try') && code.contains('catch');
-              final hasComments = code.contains('//') || code.contains('/*');
-              return usesConst &&
-                  usesLet &&
-                  usesArrayMethods &&
-                  usesErrorHandling &&
-                  hasComments;
-            },
+            validate: '''
+              const isValid = (function() {
+                return code.includes('const') &&
+                  code.includes('let') && !code.includes('var') &&
+                  (code.includes('.map(') || code.includes('.filter(')) &&
+                  code.includes('try') && code.includes('catch') &&
+                  (code.includes('//') || code.includes('/*'));
+              })();
+            ''',
           ),
         ],
       ),

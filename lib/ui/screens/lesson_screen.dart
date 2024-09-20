@@ -542,6 +542,12 @@ class _ExerciseWidgetState extends State<_ExerciseWidget> {
     ''');
   }
 
+  String validator(String code, String check) => '''
+    $code
+
+    $check
+  ''';
+
   Future<void> _checkAnswer() async {
     setState(() {
       _hasSubmitted = true;
@@ -555,15 +561,24 @@ class _ExerciseWidgetState extends State<_ExerciseWidget> {
 
     try {
       // Run the user's code
-      final isValid = await widget.exercise.validator
-          ?.call(_jsRuntime, _codeController.text);
-      if (isValid == null) {
-        setState(() {
-          _isCorrect = false;
-          _feedback = 'Exercise validator is not implemented';
-        });
-        return;
+      final code = _codeController.text
+          .replaceAll('“', '"')
+          .replaceAll('”', '"')
+          .replaceAll('‘', "'")
+          .replaceAll('’', "'");
+
+      final validator = '''
+        $code
+        let code = "${_cleanupCode(code)}";
+        ${widget.exercise.validate}
+      ''';
+      final eval = _jsRuntime.evaluate(validator);
+      if (eval.isError) {
+        throw Exception(eval.stringResult);
       }
+
+      final result = _jsRuntime.evaluate('isValid').stringResult;
+      final isValid = result == 'true';
 
       setState(() {
         _isCorrect = isValid;
@@ -577,6 +592,17 @@ class _ExerciseWidgetState extends State<_ExerciseWidget> {
         _feedback = 'Error in your code: ${e.toString()}';
       });
     }
+  }
+
+  String _cleanupCode(String code) {
+    return code
+        .replaceAll("'", "\\'")
+        .replaceAll('"', '\\"')
+        .replaceAll('\n', '\\n')
+        .replaceAll('\t', '\\t')
+        .replaceAll('\r', '\\r')
+        .replaceAll('\f', '\\f')
+        .replaceAll('\b', '\\b');
   }
 
   @override
