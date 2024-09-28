@@ -56,7 +56,7 @@ class LessonsScreen extends HookConsumerWidget {
             ),
           ],
         ),
-        leadingWidth: 290,
+        leadingWidth: 310,
         actions: [
           IconButton(
             icon: const Icon(Feather.info),

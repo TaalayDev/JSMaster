@@ -66,5 +66,50 @@
             "codePoint": 61780,
             "fontFamily": "Feather"
         }
+    },
+    {
+        "id": "3",
+        "title": "Data Types and Structures",
+        "description": "Explore the fundamental data types in JavaScript and learn about basic data structures like arrays and objects.",
+        "sections": [
+            {
+                "content": "JavaScript has several basic data types that are essential to understand:\n\n1. Primitive Data Types:\n   - Number: Represents both integer and floating-point numbers.\n   - String: Represents textual data, enclosed in single or double quotes.\n   - Boolean: Represents a logical entity with two values: true or false.\n   - Undefined: Represents a variable that has been declared but not assigned a value.\n   - Null: Represents a deliberate non-value or absence of any object value.\n\n2. Complex Data Types:\n   - Object: A collection of key-value pairs.\n   - Array: An ordered list of values, a special type of object.\n\nUnderstanding these data types is crucial for effective JavaScript programming.",
+                "codeExample": "// Number\nlet age = 25;\nlet price = 9.99;\n\n// String\nlet name = \"Alice\";\nlet greeting = 'Hello, World!';\n\n// Boolean\nlet isStudent = true;\nlet hasLicense = false;\n\n// Undefined\nlet job;\n\n// Null\nlet salary = null;\n\n// Checking types\nconsole.log(typeof age);       // \"number\"\nconsole.log(typeof name);      // \"string\"\nconsole.log(typeof isStudent); // \"boolean\"\nconsole.log(typeof job);       // \"undefined\"\nconsole.log(typeof salary);    // \"object\" (this is a quirk in JavaScript)",
+                "exercises": [
+                    {
+                        "question": "Declare a variable called \"temperature\" and assign it the value 72.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return temperature === 72;\n})();"
+                    },
+                    {
+                        "question": "Create a string variable called \"city\" with the value \"New York\".",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return city === \"New York\";\n})();"
+                    }
+                ]
+            },
+            {
+                "content": "Arrays and Objects are two important data structures in JavaScript:\n\n1. Arrays:\n   - Arrays are used to store multiple values in a single variable.\n   - They are created using square brackets [].\n   - Array elements are accessed using their index (starting from 0).\n\n2. Objects:\n   - Objects are used to store collections of data in key-value pairs.\n   - They are created using curly braces {}.\n   - Object properties can be accessed using dot notation or bracket notation.\n\nBoth arrays and objects can store different types of data.",
+                "codeExample": "// Arrays\nlet fruits = [\"apple\", \"banana\", \"orange\"];\nconsole.log(fruits[0]);  // \"apple\"\nconsole.log(fruits[1]);  // \"banana\"\nconsole.log(fruits.length);  // 3\n\n// Objects\nlet person = {\n  name: \"Bob\",\n  age: 30,\n  isStudent: false\n};\n\nconsole.log(person.name);  // \"Bob\"\nconsole.log(person[\"age\"]);  // 30\n\n// Adding new elements\nfruits[3] = \"grape\";\nperson.city = \"London\";\n\nconsole.log(fruits[3]);  // \"grape\"\nconsole.log(person.city);  // \"London\"",
+                "exercises": [
+                    {
+                        "question": "Create an array called \"colors\" with three color names of your choice.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return colors.length === 3 && Array.isArray(colors);\n})();"
+                    },
+                    {
+                        "question": "Create an object called \"book\" with properties for title and author.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return book.hasOwnProperty(\"title\") && book.hasOwnProperty(\"author\");\n})();"
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 25,
+        "icon": {
+            "codePoint": 61835,
+            "fontFamily": "Feather"
+        }
     }
 ]

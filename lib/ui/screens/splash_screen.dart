@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jsmaster/providers/lessons_provider.dart';
 import '../../core.dart';
 import 'test_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulHookConsumerWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
@@ -33,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _controller.forward();
-    _init();
+    // _init();
   }
 
   @override
@@ -52,6 +54,20 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(lessonsCacheProvider);
+
+    final isLessonsReady = state.when(
+      data: (data) => data.isReady,
+      loading: () => false,
+      error: (error, stackTrace) => false,
+    );
+
+    ref.listen(lessonsCacheProvider, (prev, next) {
+      if (next.valueOrNull?.isReady == true) {
+        _init();
+      }
+    });
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -104,10 +120,28 @@ class _SplashScreenState extends State<SplashScreen>
                         color: Colors.white70,
                       ),
                 ),
-                // const SizedBox(height: 48),
-                // const CircularProgressIndicator(
-                //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                // ),
+                state.when(
+                  data: (data) => Column(
+                    children: [
+                      const SizedBox(height: 48),
+                      const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                      if (!data.hasCache) ...[
+                        const SizedBox(height: 16),
+                        Text(
+                          'Fetching Lessons...',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  error: (_, __) => const SizedBox(),
+                  loading: () => const SizedBox(),
+                ),
               ],
             ),
           ),

@@ -173,12 +173,16 @@ class LessonsCache extends _$LessonsCache {
     final dio = ref.read(dioProvider);
 
     final response = await dio.get(url);
-    final lessons = (response.data as List)
+    final data =
+        response.data is List ? response.data : jsonDecode(response.data);
+    final lessons = (data as List)
         .map((json) => _jsonToLesson(json as Map<String, dynamic>))
         .toList();
 
     final file = await _getCacheFile();
-    await file.writeAsString(jsonEncode(lessons));
+    await file.writeAsString(
+      jsonEncode(lessons.map((l) => _lessonToJson(l)).toList()),
+    );
 
     state = AsyncValue.data(LessonsCacheState(
       isReady: true,
@@ -225,8 +229,43 @@ class LessonsCache extends _$LessonsCache {
     return Exercise(
       question: json['question'] as String,
       initialCode: json['initialCode'] as String,
-      isCompleted: json['isCompleted'] as bool,
+      isCompleted: (json['isCompleted'] as bool?) ?? false,
       validate: json['validate'] as String,
     );
+  }
+
+  Map<String, dynamic> _lessonToJson(Lesson lesson) {
+    return {
+      'id': lesson.id,
+      'title': lesson.title,
+      'description': lesson.description,
+      'difficulty': lesson.difficulty,
+      'durationMinutes': lesson.durationMinutes,
+      'icon': {
+        'codePoint': lesson.icon.codePoint,
+        'fontFamily': lesson.icon.fontFamily,
+        'fontPackage': lesson.icon.fontPackage,
+        'matchTextDirection': lesson.icon.matchTextDirection,
+        'fontFamilyFallback': lesson.icon.fontFamilyFallback,
+      },
+      'sections': lesson.sections.map(_lessonSectionToJson).toList(),
+    };
+  }
+
+  Map<String, dynamic> _lessonSectionToJson(LessonSection section) {
+    return {
+      'content': section.content,
+      'codeExample': section.codeExample,
+      'exercises': section.exercises.map(_exerciseToJson).toList(),
+    };
+  }
+
+  Map<String, dynamic> _exerciseToJson(Exercise exercise) {
+    return {
+      'question': exercise.question,
+      'initialCode': exercise.initialCode,
+      'isCompleted': exercise.isCompleted,
+      'validate': exercise.validate,
+    };
   }
 }
