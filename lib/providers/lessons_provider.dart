@@ -133,7 +133,7 @@ class LessonsCacheState {
 @riverpod
 class LessonsCache extends _$LessonsCache {
   static const url =
-      'https://raw.githubusercontent.com/TaalayDev/JSMaster/main/assets/lessons.json';
+      'https://raw.githubusercontent.com/TaalayDev/JSMaster/main/assets/json/lessons.json';
   static const cacheFile = 'lessons.json';
 
   @override

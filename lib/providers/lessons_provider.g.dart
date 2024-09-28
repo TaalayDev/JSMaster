@@ -21,7 +21,7 @@ final lessonsProvider =
 );
 
 typedef _$Lessons = AutoDisposeNotifier<List<Lesson>>;
-String _$lessonsCacheHash() => r'2869d7e57feb3d2767f2cf416bad7868d63b131f';
+String _$lessonsCacheHash() => r'194736126974f6291f797fd9cc222cd352d0877e';
 
 /// See also [LessonsCache].
 @ProviderFor(LessonsCache)
