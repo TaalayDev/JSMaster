@@ -1,0 +1,70 @@
+[
+    {
+        "id": "1",
+        "title": "Introduction to JavaScript",
+        "description": "This lesson covers the basics of JavaScript, including syntax, variables, and data types, setting a foundation for deeper understanding.",
+        "sections": [
+            {
+                "content": "JavaScript is a versatile programming language primarily used for web development. It allows developers to create dynamic, interactive web applications.\n\nHere are some key things to know about JavaScript:\n- It is a high-level, interpreted language.\n- JavaScript can be used on both the client-side (in browsers) and server-side (with environments like Node.js).\n- It is the backbone of web technologies, alongside HTML and CSS.",
+                "exercises": []
+            },
+            {
+                "content": "Let's start with some basic syntax in JavaScript.\n\n1. Comments: You can write comments to explain your code. Comments are ignored by the browser.\n   - Single line comment: `// This is a comment`\n   - Multi-line comment: `/* This is a comment */`\n\n2. Console: `console.log()` is used to print messages to the browser's console, often for debugging purposes.",
+                "codeExample": "// Single line comment\nconsole.log('Hello, JavaScript!');  // Prints: Hello, JavaScript!\n\n/* Multi-line comment */\nconsole.log('This is a multi-line comment example');",
+                "exercises": [
+                    {
+                        "question": "Write a program that prints \"Welcome to JavaScript\" to the console.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  const logs = consoleLog.join('\\n');\n  return logs === 'Welcome to JavaScript';\n})();"
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 15,
+        "icon": {
+            "codePoint": 61731,
+            "fontFamily": "Feather"
+        }
+    },
+    {
+        "id": "2",
+        "title": "Variables and Constants",
+        "description": "Learn how to declare and use variables and constants in JavaScript, understanding their differences and best practices.",
+        "sections": [
+            {
+                "content": "Variables and constants are fundamental concepts in JavaScript. They allow you to store and manipulate data in your programs.\n\n1. Variables (let):\n   - Variables are containers for storing data values.\n   - They can be declared using the 'let' keyword.\n   - The value of a variable can be changed after it's declared.\n\n2. Constants (const):\n   - Constants are also used to store data, but their value cannot be changed once set.\n   - They are declared using the 'const' keyword.\n   - Use constants for values that should not be reassigned.\n\n3. var (older way):\n   - 'var' is an older way to declare variables in JavaScript.\n   - It's function-scoped rather than block-scoped like 'let' and 'const'.\n   - It's generally recommended to use 'let' and 'const' in modern JavaScript.",
+                "codeExample": "// Variable declaration and assignment\nlet age = 25;\nconsole.log(age); // Output: 25\n\nage = 26; // You can change the value of a variable\nconsole.log(age); // Output: 26\n\n// Constant declaration\nconst PI = 3.14159;\nconsole.log(PI); // Output: 3.14159\n\n// PI = 3.14; // This would cause an error because you can't reassign a constant\n\n// Using var (older way)\nvar name = \"John\";\nconsole.log(name); // Output: John",
+                "exercises": [
+                    {
+                        "question": "Declare a variable named \"score\" and assign it the value 100.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return score === 100;\n})();"
+                    },
+                    {
+                        "question": "Declare a constant named \"MAX_LEVEL\" and assign it the value 50.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return MAX_LEVEL === 50 && /const MAX_LEVEL/.test(code);\n})();"
+                    }
+                ]
+            },
+            {
+                "content": "Best Practices for Using Variables and Constants:\n\n1. Use descriptive names: Choose variable and constant names that clearly describe their purpose.\n2. Use camelCase for variables and constants: e.g., userAge, maxScore.\n3. Use UPPERCASE_WITH_UNDERSCORES for constants that are truly fixed values: e.g., MAX_ITEMS, PI.\n4. Prefer 'const' over 'let' when the value won't change: This helps prevent accidental reassignment.\n5. Declare variables at the top of their scope: This makes it easier to see all variables used in a block.\n6. Avoid using 'var': Stick to 'let' and 'const' for clearer scoping rules.\n\nRemember: JavaScript is a dynamically typed language, which means you don't need to specify the data type when declaring variables or constants. The type is inferred from the assigned value.",
+                "codeExample": "// Good practices\nconst MAX_USERS = 100;\nlet currentUserCount = 0;\n\nfunction addUser(username) {\n  if (currentUserCount < MAX_USERS) {\n    // Add user logic here\n    currentUserCount++;\n    console.log(`Added user: ${username}`);\n  } else {\n    console.log(\"Cannot add user. Maximum user limit reached.\");\n  }\n}\n\naddUser(\"Alice\");\nconsole.log(currentUserCount); // Output: 1\n\n// Bad practice (avoid using var)\nvar temp = 72; // Use 'let' instead",
+                "exercises": [
+                    {
+                        "question": "Declare a variable for a user's age and a constant for the minimum voting age. Then write an if statement to check if the user can vote.",
+                        "initialCode": "// Declare your variables and constant here\n\n// Write your if statement here",
+                        "validate": "const isValid = (function() {\n  let varMatch = code.match(/let (\\w+) =/);\n  let constMatch = code.match(/const (\\w+) =/);\n\n  if (!varMatch || !constMatch) return false;\n\n  let varName = varMatch[1];\n  let constName = constMatch[1];\n\n  let varValue = eval(varName);\n  let constValue = eval(constName);\n\n  let isVarNumber = typeof varValue === 'number';\n  let isConstNumber = typeof constValue === 'number';\n\n  let isIfStatement = /if \\(.+?\\) {/.test(code);\n  let isConditionCorrect = code.includes(`if (${varName} >= ${constName})`);\n\n  return isVarNumber && isConstNumber && isIfStatement && isConditionCorrect;\n})();"
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 25,
+        "icon": {
+            "codePoint": 61780,
+            "fontFamily": "Feather"
+        }
+    }
+]

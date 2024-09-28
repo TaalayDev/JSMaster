@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../core.dart';
 import '../data.dart';
 import 'common_providers.dart';
 
@@ -13,6 +19,8 @@ class Lessons extends _$Lessons {
   @override
   List<Lesson> build() {
     final completedLessons = storage.completedLessons;
+    final lessonsList = ref.watch(lessonsCacheProvider).valueOrNull?.lessons ??
+        const <Lesson>[];
     return lessonsList.map((lesson) {
       final isCompleted = completedLessons.contains(lesson.id);
       return lesson.copyWith(isCompleted: isCompleted);
@@ -66,5 +74,159 @@ class Lessons extends _$Lessons {
     if (lesson.isCompleted) {
       toggleLessonCompletion(lessonId);
     }
+  }
+}
+
+class LessonsCacheState {
+  final bool hasCache;
+  final bool isReady;
+  final bool isLoading;
+  final Object? error;
+  final List<Lesson> lessons;
+
+  const LessonsCacheState({
+    this.hasCache = false,
+    this.isReady = false,
+    this.isLoading = false,
+    this.error,
+    this.lessons = const [],
+  });
+
+  LessonsCacheState copyWith({
+    bool? hasCache,
+    bool? isReady,
+    bool? isLoading,
+    Object? error,
+    List<Lesson>? lessons,
+  }) {
+    return LessonsCacheState(
+      hasCache: hasCache ?? this.hasCache,
+      isReady: isReady ?? this.isReady,
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
+      lessons: lessons ?? this.lessons,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is LessonsCacheState &&
+        other.hasCache == hasCache &&
+        other.isReady == isReady &&
+        other.isLoading == isLoading &&
+        other.error == error &&
+        listEquals(other.lessons, lessons);
+  }
+
+  @override
+  int get hashCode {
+    return hasCache.hashCode ^
+        isReady.hashCode ^
+        isLoading.hashCode ^
+        error.hashCode ^
+        lessons.hashCode;
+  }
+}
+
+@riverpod
+class LessonsCache extends _$LessonsCache {
+  static const url =
+      'https://raw.githubusercontent.com/TaalayDev/JSMaster/main/assets/lessons.json';
+  static const cacheFile = 'lessons.json';
+
+  @override
+  Future<LessonsCacheState> build() async {
+    final file = await _getCacheFile();
+    final hasCache = await file.exists();
+    fetchLessons();
+
+    if (!hasCache) {
+      return const LessonsCacheState(isLoading: true);
+    }
+
+    final lessons = await _readCache(file);
+    return LessonsCacheState(
+      isLoading: !hasCache,
+      hasCache: hasCache,
+      isReady: true,
+      lessons: lessons,
+    );
+  }
+
+  Future<File> _getCacheFile() async {
+    final appDocDir = await getApplicationDocumentsDirectory();
+    return File('${appDocDir.path}/$cacheFile');
+  }
+
+  Future<List<Lesson>> _readCache(File file) async {
+    final json = await file.readAsString();
+    final lessons = (jsonDecode(json) as List)
+        .map((json) => _jsonToLesson(json as Map<String, dynamic>))
+        .toList();
+
+    return lessons;
+  }
+
+  Future<void> fetchLessons() async {
+    final dio = ref.read(dioProvider);
+
+    final response = await dio.get(url);
+    final lessons = (response.data as List)
+        .map((json) => _jsonToLesson(json as Map<String, dynamic>))
+        .toList();
+
+    final file = await _getCacheFile();
+    await file.writeAsString(jsonEncode(lessons));
+
+    state = AsyncValue.data(LessonsCacheState(
+      isReady: true,
+      hasCache: true,
+      lessons: lessons,
+    ));
+  }
+
+  Lesson _jsonToLesson(Map<String, dynamic> json) {
+    return Lesson(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      difficulty: json['difficulty'] as String,
+      durationMinutes: json['durationMinutes'] as int,
+      icon: IconData(
+        json['icon']['codePoint'] as int,
+        fontFamily: json['icon']['fontFamily'] as String,
+        fontPackage: json['icon']['fontPackage'] as String?,
+        matchTextDirection:
+            (json['icon']['matchTextDirection'] as bool?) ?? false,
+        fontFamilyFallback: (json['icon']['fontFamilyFallback'] as List?)
+            ?.map((e) => e as String)
+            .toList(),
+      ),
+      sections: (json['sections'] as List)
+          .map((section) =>
+              _jsonToLessonSection(section as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  LessonSection _jsonToLessonSection(Map<String, dynamic> json) {
+    return LessonSection(
+      content: json['content'] as String,
+      codeExample: json['codeExample'] as String?,
+      exercises: (json['exercises'] as List)
+          .map((exercise) => _jsonToExercise(exercise as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Exercise _jsonToExercise(Map<String, dynamic> json) {
+    return Exercise(
+      question: json['question'] as String,
+      initialCode: json['initialCode'] as String,
+      isCompleted: json['isCompleted'] as bool,
+      validate: json['validate'] as String,
+    );
   }
 }

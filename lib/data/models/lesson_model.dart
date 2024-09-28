@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:dart_eval/dart_eval.dart';
-import 'package:dart_eval/dart_eval_bridge.dart';
-import 'package:eval_annotation/eval_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_js/flutter_js.dart';
@@ -113,14 +110,12 @@ class Exercise {
   final String question;
   final String initialCode;
   final String validate;
-  final Future<bool> Function(JavascriptRuntime, String code)? validator;
   final bool isCompleted;
 
   const Exercise({
     required this.question,
     required this.initialCode,
     required this.validate,
-    this.validator,
     this.isCompleted = false,
   });
 
@@ -130,7 +125,6 @@ class Exercise {
     return Exercise(
       question: question,
       initialCode: initialCode,
-      validator: validator,
       validate: validate,
       isCompleted: isCompleted ?? this.isCompleted,
     );

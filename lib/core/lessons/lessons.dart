@@ -2,12 +2,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import '../../data.dart';
 
-String validator(String code, String check) => '''
-  $code
-
-  $check
-''';
-
 final List<Lesson> lessonsList = [
   const Lesson(
     id: '1',

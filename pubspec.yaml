@@ -81,12 +81,9 @@ dependencies:
   # annotations
   freezed_annotation: ^2.1.0
   json_annotation: ^4.8.1
-  eval_annotation: ^0.7.0
 
   flutter_js: ^0.8.1
   equatable: ^2.0.5
-  dart_eval: ^0.7.9
-  flutter_eval: ^0.7.6
 
 dev_dependencies:
   flutter_test:
