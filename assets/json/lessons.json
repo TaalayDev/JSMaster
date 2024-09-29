@@ -111,5 +111,95 @@
             "codePoint": 61835,
             "fontFamily": "Feather"
         }
+    },
+    {
+        "id": "4",
+        "title": "Operators and Expressions",
+        "description": "Learn about different types of operators in JavaScript and how to use them to form expressions. Understand arithmetic, comparison, and logical operators.",
+        "sections": [
+            {
+                "content": "Operators in JavaScript are symbols that perform operations on operands (values and variables). Expressions are combinations of values, variables, and operators that can be evaluated to produce a result.\n\n1. Arithmetic Operators:\n   - Addition (+)\n   - Subtraction (-)\n   - Multiplication (*)\n   - Division (/)\n   - Modulus (%) - returns the remainder of a division\n   - Increment (++) - increases a value by 1\n   - Decrement (--) - decreases a value by 1\n\n2. Assignment Operators:\n   - Assign a value (=)\n   - Add and assign (+=)\n   - Subtract and assign (-=)\n   - Multiply and assign (*=)\n   - Divide and assign (/=)\n\nLet's see these operators in action:",
+                "codeExample": "// Arithmetic operators\nlet a = 10;\nlet b = 3;\n\nconsole.log(a + b);  // 13\nconsole.log(a - b);  // 7\nconsole.log(a * b);  // 30\nconsole.log(a / b);  // 3.3333...\nconsole.log(a % b);  // 1 (remainder of 10 divided by 3)\n\nlet c = 5;\nc++;  // Increment\nconsole.log(c);  // 6\nc--;  // Decrement\nconsole.log(c);  // 5\n\n// Assignment operators\nlet x = 20;\nx += 5;  // Same as: x = x + 5\nconsole.log(x);  // 25\n\nx -= 3;  // Same as: x = x - 3\nconsole.log(x);  // 22\n\nx *= 2;  // Same as: x = x * 2\nconsole.log(x);  // 44\n\nx /= 4;  // Same as: x = x / 4\nconsole.log(x);  // 11",
+                "exercises": [
+                    {
+                        "question": "Create two variables, \"num1\" with value 15 and \"num2\" with value 4. Then create a third variable \"result\" that stores the remainder when num1 is divided by num2.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return result === 3 && /let result = num1 % num2/.test(code);\n})();"
+                    },
+                    {
+                        "question": "Create a variable \"count\" with initial value 10. Use the increment operator to increase its value by 1, then multiply the result by 3 using the multiplication assignment operator.",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return count === 33 \n    && /let count = 10;/.test(code) \n    && /count\\+\\+/.test(code) \n    && (/count \\*= 3/.test(code) || /count \\* 3/.test(code));\n})();"
+                    }
+                ]
+            },
+            {
+                "content": "3. Comparison Operators:\n   - Equal to (==)\n   - Strict equal to (===) - compares both value and type\n   - Not equal to (!=)\n   - Strict not equal to (!==)\n   - Greater than (>)\n   - Less than (<)\n   - Greater than or equal to (>=)\n   - Less than or equal to (<=)\n\n4. Logical Operators:\n   - AND (&&) - returns true if both operands are true\n   - OR (||) - returns true if at least one operand is true\n   - NOT (!) - reverses the boolean value\n\nThese operators are often used in conditional statements, which we'll cover in more detail in future lessons.",
+                "codeExample": "// Comparison operators\nlet p = 5;\nlet q = \"5\";\n\nconsole.log(p == q);   // true (values are equal)\nconsole.log(p === q);  // false (values are equal, but types are different)\nconsole.log(p != q);   // false\nconsole.log(p !== q);  // true\n\nconsole.log(p > 3);    // true\nconsole.log(p < 3);    // false\nconsole.log(p >= 5);   // true\nconsole.log(p <= 5);   // true\n\n// Logical operators\nlet isAdult = true;\nlet hasLicense = false;\n\nconsole.log(isAdult && hasLicense);  // false\nconsole.log(isAdult || hasLicense);  // true\nconsole.log(!isAdult);               // false\n\n// Combining operators\nlet age = 25;\nlet hasPermission = true;\nlet canAccess = age >= 18 && hasPermission;\nconsole.log(canAccess);  // true",
+                "exercises": [
+                    {
+                        "question": "Create two variables: \"num\" with value 10 and \"text\" with value \"10\". Use the strict equality operator to compare them and store the result in a variable called \"isStrictlyEqual\".",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return isStrictlyEqual === false \n    && /===/.test(code) \n    && num === 10 \n    && text === \"10\";\n})();"
+                    },
+                    {
+                        "question": "Create two boolean variables: \"isSunny\" (true) and \"isWarm\" (false). Use the logical OR operator to check if either condition is true, and store the result in a variable called \"niceWeather\".",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return niceWeather === true \n    && /\\|\\|/.test(code) \n    && isSunny === true \n    && isWarm === false;\n})();"
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 30,
+        "icon": {
+            "codePoint": 61888,
+            "fontFamily": "Feather"
+        }
+    },
+    {
+        "id": "5",
+        "title": "Working with Strings",
+        "description": "Learn how to create, manipulate, and work with strings in JavaScript. Understand basic string operations and commonly used string methods.",
+        "sections": [
+            {
+                "content": "Strings in JavaScript are used to represent text. They can be created using single quotes (''), double quotes (\"\"), or backticks (``).\n\nKey points about strings:\n1. Strings are immutable, meaning once created, they cannot be changed.\n2. JavaScript provides many built-in methods to work with strings.\n3. String indices start at 0 for the first character.\n\nLet's explore some basic string operations:",
+                "codeExample": "// Creating strings\nlet singleQuotes = 'Hello';\nlet doubleQuotes = \"World\";\nlet backticks = `JavaScript`;\n\n// Concatenation\nlet greeting = singleQuotes + \" \" + doubleQuotes;\nconsole.log(greeting);  // \"Hello World\"\n\n// String length\nconsole.log(greeting.length);  // 11\n\n// Accessing characters\nconsole.log(greeting[0]);  // \"H\"\nconsole.log(greeting[6]);  // \"W\"\n\n// Strings are immutable\ngreeting[0] = \"h\";  // This doesn't change the string\nconsole.log(greeting);  // Still \"Hello World\"\n\n// Template literals (with backticks)\nlet name = \"Alice\";\nlet message = `Welcome, ${name}!`;\nconsole.log(message);  // \"Welcome, Alice!\"",
+                "exercises": [
+                    {
+                        "question": "Create a string variable called \"language\" with the value \"JavaScript\".",
+                        "initialCode": "// Write your code here",
+                        "validate": "const isValid = (function() {\n  return language === \"JavaScript\";\n})();"
+                    },
+                    {
+                        "question": "Using the \"language\" variable, create a new string that says \"I am learning JavaScript!\" and store it in a variable called \"learningMessage\".",
+                        "initialCode": "let language = \"JavaScript\";\n// Write your code here",
+                        "validate": "const isValid = (function() {\n  return learningMessage === \"I am learning JavaScript!\"\n    && (/\\+/.test(code) || /\\$\\{language\\}/.test(code));\n})();"
+                    }
+                ]
+            },
+            {
+                "content": "JavaScript provides many useful methods for working with strings. Here are some commonly used ones:\n\n1. toUpperCase() and toLowerCase(): Convert a string to all uppercase or lowercase.\n2. trim(): Removes whitespace from both ends of a string.\n3. substring(start, end): Extracts a portion of a string between two indices.\n4. indexOf(substring): Returns the index of the first occurrence of a substring.\n5. replace(search, replacement): Replaces a specified value with another value in a string.\n\nLet's see these methods in action:",
+                "codeExample": "let text = \"  Hello, World!  \";\n\n// toUpperCase() and toLowerCase()\nconsole.log(text.toUpperCase());  // \"  HELLO, WORLD!  \"\nconsole.log(text.toLowerCase());  // \"  hello, world!  \"\n\n// trim()\nconsole.log(text.trim());  // \"Hello, World!\"\n\n// substring(start, end)\nconsole.log(text.substring(2, 7));  // \"Hello\"\n\n// indexOf(substring)\nconsole.log(text.indexOf(\"World\"));  // 9\n\n// replace(search, replacement)\nconsole.log(text.replace(\"World\", \"JavaScript\"));  // \"  Hello, JavaScript!  \"\n\n// Chaining methods\nlet result = text.trim().toLowerCase().replace(\"world\", \"javascript\");\nconsole.log(result);  // \"hello, javascript!\"",
+                "exercises": [
+                    {
+                        "question": "Create a variable called \"email\" with the value \"   USER@EXAMPLE.COM   \". Then, create a new variable called \"cleanEmail\" that contains the email in lowercase with no leading or trailing spaces.",
+                        "initialCode": "let email = \"   USER@EXAMPLE.COM   \";\n// Write your code here",
+                        "validate": "const isValid = (function() {\n  return cleanEmail === \"user@example.com\" && /trim/.test(code) && /toLowerCase/.test(code);\n})();"
+                    },
+                    {
+                        "question": "Using the string \"JavaScript is awesome\", create a new string that replaces \"awesome\" with \"amazing\" and store it in a variable called \"newPhrase\".",
+                        "initialCode": "let phrase = \"JavaScript is awesome\";\n// Write your code here",
+                        "validate": "const isValid = (function() {\n  return newPhrase === \"JavaScript is amazing\" && /replace/.test(code);\n})();"
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 25,
+        "icon": {
+            "codePoint": 61950,
+            "fontFamily": "Feather"
+        }
     }
 ]

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:jsmaster/providers/lessons_provider.dart';
+
+import '../../providers/lessons_provider.dart';
 import '../../core.dart';
-import 'test_screen.dart';
 
 class SplashScreen extends StatefulHookConsumerWidget {
   const SplashScreen({super.key});
@@ -35,7 +34,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     );
 
     _controller.forward();
-    // _init();
   }
 
   @override
@@ -45,22 +43,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   void _navigateToNextScreen() {
-    const LessonsRoute().go(context);
+    if (mounted) const LessonsRoute().go(context);
   }
 
   void _init() async {
-    await Future.delayed(const Duration(seconds: 5), _navigateToNextScreen);
+    await Future.delayed(const Duration(seconds: 3), _navigateToNextScreen);
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(lessonsCacheProvider);
-
-    final isLessonsReady = state.when(
-      data: (data) => data.isReady,
-      loading: () => false,
-      error: (error, stackTrace) => false,
-    );
 
     ref.listen(lessonsCacheProvider, (prev, next) {
       if (next.valueOrNull?.isReady == true) {
