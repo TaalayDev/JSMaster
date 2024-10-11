@@ -144,3 +144,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+assets_dir: "assets"
+assets_output_file: "lib/config/assets.dart"
+assets_class_name: "Assets"

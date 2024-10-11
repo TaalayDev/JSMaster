@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:jsmaster/config/assets.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../core.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -59,10 +62,9 @@ class _AppLogo extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           shape: BoxShape.circle,
         ),
-        child: Icon(
-          Icons.code,
-          size: 60,
-          color: Theme.of(context).colorScheme.onPrimary,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(60),
+          child: Image.asset(Assets.images.icLauncher),
         ),
       ),
     );
@@ -144,7 +146,7 @@ class _DeveloperInfo extends StatelessWidget {
           children: [
             const CircleAvatar(
               backgroundImage: NetworkImage(
-                'https://avatars.githubusercontent.com/u/12345678',
+                'https://avatars.githubusercontent.com/u/62436240?s=400&u=17fa868323a89ceb0626cadd30074fece0f340f5&v=4',
               ),
               radius: 20,
             ),
@@ -153,14 +155,8 @@ class _DeveloperInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'John Doe',
+                  'TaalayDev',
                   style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Text(
-                  'Lead Developer',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).hintColor,
-                      ),
                 ),
               ],
             ),
@@ -169,10 +165,10 @@ class _DeveloperInfo extends StatelessWidget {
         const SizedBox(height: 16),
         OutlinedButton.icon(
           onPressed: () {
-            // TODO: Implement contact functionality
+            launchUrlString('https://taalaydeb.github.io/');
           },
-          icon: const Icon(Feather.mail),
-          label: const Text('Contact Us'),
+          icon: const Icon(Feather.globe),
+          label: const Text('Visit Website'),
         ),
       ],
     );
