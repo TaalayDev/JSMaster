@@ -83,6 +83,7 @@ class LessonsCacheState {
   final bool isLoading;
   final Object? error;
   final List<Lesson> lessons;
+  final List<Quiz> quizzes;
 
   const LessonsCacheState({
     this.hasCache = false,
@@ -90,6 +91,7 @@ class LessonsCacheState {
     this.isLoading = false,
     this.error,
     this.lessons = const [],
+    this.quizzes = const [],
   });
 
   LessonsCacheState copyWith({
@@ -98,6 +100,7 @@ class LessonsCacheState {
     bool? isLoading,
     Object? error,
     List<Lesson>? lessons,
+    List<Quiz>? quizzes,
   }) {
     return LessonsCacheState(
       hasCache: hasCache ?? this.hasCache,
@@ -105,6 +108,7 @@ class LessonsCacheState {
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
       lessons: lessons ?? this.lessons,
+      quizzes: quizzes ?? this.quizzes,
     );
   }
 
@@ -117,7 +121,8 @@ class LessonsCacheState {
         other.isReady == isReady &&
         other.isLoading == isLoading &&
         other.error == error &&
-        listEquals(other.lessons, lessons);
+        listEquals(other.lessons, lessons) &&
+        listEquals(other.quizzes, quizzes);
   }
 
   @override
@@ -126,62 +131,73 @@ class LessonsCacheState {
         isReady.hashCode ^
         isLoading.hashCode ^
         error.hashCode ^
-        lessons.hashCode;
+        lessons.hashCode ^
+        quizzes.hashCode;
   }
 }
 
 @riverpod
 class LessonsCache extends _$LessonsCache {
-  static const url =
+  static const lessonsUrl =
       'https://raw.githubusercontent.com/TaalayDev/JSMaster/main/assets/json/lessons.json';
-  static const cacheFile = 'lessons.json';
+  static const quizzesUrl =
+      'https://raw.githubusercontent.com/TaalayDev/JSMaster/main/assets/json/quizzes.json';
+  static const cacheFile = 'lessons_and_quizzes.json';
 
   @override
   Future<LessonsCacheState> build() async {
-    final file = await _getCacheFile();
+    final file = await _getCacheFile(cacheFile);
     final hasCache = await file.exists();
-    fetchLessons();
+    fetchLessonsAndQuizzes();
 
     if (!hasCache) {
       return const LessonsCacheState(isLoading: true);
     }
 
-    final lessons = await _readCache(file);
+    final cache = await _readCache(file);
     return LessonsCacheState(
       isLoading: !hasCache,
       hasCache: hasCache,
       isReady: true,
-      lessons: lessons,
+      lessons: cache.lessons,
+      quizzes: cache.quizzes,
     );
   }
 
-  Future<File> _getCacheFile() async {
+  Future<File> _getCacheFile(String fileName) async {
     final appDocDir = await getApplicationDocumentsDirectory();
-    return File('${appDocDir.path}/$cacheFile');
+    return File('${appDocDir.path}/$fileName');
   }
 
-  Future<List<Lesson>> _readCache(File file) async {
+  Future<({List<Lesson> lessons, List<Quiz> quizzes})> _readCache(
+    File file,
+  ) async {
     final json = await file.readAsString();
-    final lessons = (jsonDecode(json) as List)
+    final data = jsonDecode(json) as Map<String, dynamic>;
+
+    final lessons = (data['lessons'] as List)
         .map((json) => _jsonToLesson(json as Map<String, dynamic>))
         .toList();
+    final quizzes = (data['quizzes'] as List)
+        .map((json) => Quiz.fromMap(json as Map<String, dynamic>))
+        .toList();
 
-    return lessons;
+    return (lessons: lessons, quizzes: quizzes);
   }
 
-  Future<void> fetchLessons() async {
-    final dio = ref.read(dioProvider);
+  Future<void> fetchLessonsAndQuizzes() async {
+    final lessons = await fetchLessons();
+    final quizzes = await fetchQuizzes();
 
-    final response = await dio.get(url);
-    final data =
-        response.data is List ? response.data : jsonDecode(response.data);
-    final lessons = (data as List)
-        .map((json) => _jsonToLesson(json as Map<String, dynamic>))
-        .toList();
+    final lessonsJson = lessons.map((l) => _lessonToJson(l)).toList();
+    final quizzesJson = quizzes.map((q) => q.toMap()).toList();
 
-    final file = await _getCacheFile();
+    final file = await _getCacheFile(cacheFile);
     await file.writeAsString(
-      jsonEncode(lessons.map((l) => _lessonToJson(l)).toList()),
+      jsonEncode({
+        'lessons': lessonsJson,
+        'quizzes': quizzesJson,
+      }),
     );
 
     state = AsyncValue.data(LessonsCacheState(
@@ -189,6 +205,32 @@ class LessonsCache extends _$LessonsCache {
       hasCache: true,
       lessons: lessons,
     ));
+  }
+
+  Future<List<Lesson>> fetchLessons() async {
+    final dio = ref.read(dioProvider);
+
+    final response = await dio.get(lessonsUrl);
+    final data =
+        response.data is List ? response.data : jsonDecode(response.data);
+    final lessons = (data as List)
+        .map((json) => _jsonToLesson(json as Map<String, dynamic>))
+        .toList();
+
+    return lessons;
+  }
+
+  Future<List<Quiz>> fetchQuizzes() async {
+    final dio = ref.read(dioProvider);
+
+    final response = await dio.get(quizzesUrl);
+    final data =
+        response.data is List ? response.data : jsonDecode(response.data);
+    final quizzes = (data as List)
+        .map((json) => Quiz.fromMap(json as Map<String, dynamic>))
+        .toList();
+
+    return quizzes;
   }
 
   Lesson _jsonToLesson(Map<String, dynamic> json) {

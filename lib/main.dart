@@ -13,6 +13,16 @@ void main() async {
   await LocalStorage.init();
 
   setupLogger();
+  _test();
 
   runApp(const ProviderScope(child: App()));
+}
+
+void _test() {
+  final quizzes = quizzesList.map((quiz) {
+    return quiz.toMap();
+  }).toList();
+  final quizzesJson = jsonEncode(quizzes);
+
+  Clipboard.setData(ClipboardData(text: quizzesJson));
 }

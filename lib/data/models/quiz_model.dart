@@ -19,6 +19,19 @@ class Quiz extends Equatable {
     this.isCompleted = false,
   });
 
+  factory Quiz.fromMap(Map<String, dynamic> map) {
+    return Quiz(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      difficulty: map['difficulty'],
+      durationMinutes: map['durationMinutes'],
+      questions: List<QuizQuestion>.from(
+          map['questions']?.map((x) => QuizQuestion.fromMap(x))),
+      isCompleted: false,
+    );
+  }
+
   Quiz copyWith({
     String? id,
     String? title,
@@ -49,6 +62,17 @@ class Quiz extends Equatable {
         questions,
         isCompleted,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'difficulty': difficulty,
+      'durationMinutes': durationMinutes,
+      'questions': questions.map((x) => x.toMap()).toList(),
+    };
+  }
 }
 
 class QuizQuestion extends Equatable {
@@ -62,10 +86,26 @@ class QuizQuestion extends Equatable {
     required this.correctOptionIndex,
   });
 
+  factory QuizQuestion.fromMap(Map<String, dynamic> map) {
+    return QuizQuestion(
+      question: map['question'],
+      options: List<String>.from(map['options']),
+      correctOptionIndex: map['correctOptionIndex'],
+    );
+  }
+
   @override
   List<Object?> get props => [
         question,
         options,
         correctOptionIndex,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'question': question,
+      'options': options,
+      'correctOptionIndex': correctOptionIndex,
+    };
+  }
 }
