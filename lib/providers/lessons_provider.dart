@@ -204,6 +204,7 @@ class LessonsCache extends _$LessonsCache {
       isReady: true,
       hasCache: true,
       lessons: lessons,
+      quizzes: quizzes,
     ));
   }
 

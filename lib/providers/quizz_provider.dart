@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../core.dart';
 import '../data.dart';
 import 'common_providers.dart';
+import 'lessons_provider.dart';
 
 part 'quizz_provider.g.dart';
 
@@ -13,7 +14,9 @@ class QuizzState extends _$QuizzState {
   @override
   List<Quiz> build() {
     final completedQuizzes = storage.completedQuizzes;
-    return quizzesList.map((quiz) {
+    final quizzes =
+        ref.watch(lessonsCacheProvider).valueOrNull?.quizzes ?? const <Quiz>[];
+    return quizzes.map((quiz) {
       final isCompleted = completedQuizzes.contains(quiz.id);
       return quiz.copyWith(isCompleted: isCompleted);
     }).toList();

@@ -17,6 +17,7 @@ class QuizzesScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizzes = ref.watch(quizzStateProvider);
+    print(quizzes);
     final progress = calculateProgress(quizzes);
 
     return Scaffold(
