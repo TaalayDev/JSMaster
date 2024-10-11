@@ -65,6 +65,23 @@ class Lesson {
         icon.hashCode ^
         isCompleted.hashCode;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'sections': sections.map((x) => x.toMap()).toList(),
+      'difficulty': difficulty,
+      'durationMinutes': durationMinutes,
+      'icon': {
+        'codePoint': icon.codePoint,
+        'fontFamily': icon.fontFamily,
+        'fontPackage': icon.fontPackage,
+      },
+      'isCompleted': isCompleted,
+    };
+  }
 }
 
 class LessonSection {
@@ -103,6 +120,14 @@ class LessonSection {
   @override
   int get hashCode {
     return content.hashCode ^ codeExample.hashCode ^ exercises.hashCode;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'content': content,
+      'codeExample': codeExample,
+      'exercises': exercises.map((x) => x.toMap()).toList(),
+    };
   }
 }
 
@@ -147,5 +172,14 @@ class Exercise {
         initialCode.hashCode ^
         isCompleted.hashCode ^
         validate.hashCode;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'question': question,
+      'initialCode': initialCode,
+      'validate': validate,
+      'isCompleted': isCompleted,
+    };
   }
 }

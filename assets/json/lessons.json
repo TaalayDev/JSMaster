@@ -201,5 +201,719 @@
             "codePoint": 61950,
             "fontFamily": "Feather"
         }
+    },
+    {
+        "id": "6",
+        "title": "Numbers and the Math Object",
+        "description": "Explore number operations in JavaScript and learn how to use the built-in Math object for more complex mathematical operations.",
+        "sections": [
+            {
+                "content": "In JavaScript, numbers can be integers (whole numbers) or floating-point (decimal) numbers. There's no separate integer type; all numbers are represented as 64-bit floating-point values.\n\nKey points about numbers:\n1. JavaScript uses the number type for both integers and floating-point numbers.\n2. Special number values include Infinity, -Infinity, and NaN (Not a Number).\n3. Be cautious with floating-point precision in calculations.\n\nLet's explore some number operations:\n      ",
+                "codeExample": "// Basic number operations\nlet x = 10;\nlet y = 3;\n\nconsole.log(x + y);  // 13\nconsole.log(x - y);  // 7\nconsole.log(x * y);  // 30\nconsole.log(x / y);  // 3.3333...\n\n// Integer division (using Math.floor)\nconsole.log(Math.floor(x / y));  // 3\n\n// Modulus (remainder)\nconsole.log(x % y);  // 1\n\n// Exponentiation\nconsole.log(x ** 2);  // 100 (10 squared)\n\n// Special number values\nconsole.log(1 / 0);   // Infinity\nconsole.log(-1 / 0);  // -Infinity\nconsole.log(0 / 0);   // NaN\n\n// Be careful with floating-point precision\nconsole.log(0.1 + 0.2);  // 0.30000000000000004\nconsole.log(0.1 + 0.2 === 0.3);  // false\n      ",
+                "exercises": [
+                    {
+                        "question": "Create two variables, \"width\" with value 7.5 and \"height\" with value 3. Calculate the area and store it in a variable called \"area\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return Math.abs(area - 22.5) < 0.0001;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create a variable \"number\" with value 17. Use the modulus operator to check if it's odd or even. Store the result (0 for even, 1 for odd) in a variable called \"oddOrEven\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return oddOrEven === 1 && /%/.test(code);\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "The Math object in JavaScript provides properties and methods for mathematical constants and functions. It's a built-in object that you can use without importing anything.\n\nSome commonly used Math properties and methods:\n\n1. Math.PI: The ratio of a circle's circumference to its diameter (≈3.14159)\n2. Math.round(x): Rounds x to the nearest integer\n3. Math.floor(x): Rounds x down to the nearest integer\n4. Math.ceil(x): Rounds x up to the nearest integer\n5. Math.abs(x): Returns the absolute value of x\n6. Math.max(x, y, ...): Returns the largest of the given numbers\n7. Math.min(x, y, ...): Returns the smallest of the given numbers\n8. Math.random(): Returns a random number between 0 (inclusive) and 1 (exclusive)\n\nLet's see these in action:\n      ",
+                "codeExample": "// Using Math constants\nconsole.log(Math.PI);  // 3.141592653589793\n\n// Rounding methods\nconsole.log(Math.round(4.7));  // 5\nconsole.log(Math.round(4.4));  // 4\nconsole.log(Math.floor(4.7));  // 4\nconsole.log(Math.ceil(4.4));   // 5\n\n// Absolute value\nconsole.log(Math.abs(-5));  // 5\n\n// Max and Min\nconsole.log(Math.max(5, 10, 3));  // 10\nconsole.log(Math.min(5, 10, 3));  // 3\n\n// Random number\nconsole.log(Math.random());  // Random number between 0 and 1\n\n// Generate a random integer between 1 and 10\nlet randomInt = Math.floor(Math.random() * 10) + 1;\nconsole.log(randomInt);  // Random integer between 1 and 10\n      ",
+                "exercises": [
+                    {
+                        "question": "Calculate the area of a circle with radius 5 using Math.PI. Store the result in a variable called \"circleArea\". (Hint: The formula is π * r^2)",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return Math.abs(circleArea - 78.53981633974483) < 0.0001\n                  && /Math.PI/.test(code);\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Generate a random number between 1 and 100 (inclusive) and store it in a variable called \"randomNumber\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return randomNumber >= 1 \n                  && randomNumber <= 100 \n                  && Math.floor(randomNumber) === randomNumber\n                  && /Math.random/.test(code);\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 30,
+        "icon": {
+            "codePoint": 61823,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "7",
+        "title": "Control Flow: Conditionals",
+        "description": "Learn how to control the flow of your JavaScript programs using conditional statements like if, else if, else, and switch.",
+        "sections": [
+            {
+                "content": "Conditional statements allow you to execute different code blocks based on certain conditions. In JavaScript, we have the following conditional statements:\n\n1. if statement\n2. if...else statement\n3. if...else if...else statement\n4. switch statement\n\nLet's start with the if, else if, and else statements:\n\n1. if statement: Executes a block of code if a specified condition is true.\n2. else statement: Specifies a block of code to be executed if the condition is false.\n3. else if statement: Specifies a new condition if the first condition is false.\n      ",
+                "codeExample": "let temperature = 25;\n\n// Simple if statement\nif (temperature > 30) {\n  console.log(\"It's a hot day!\");\n}\n\n// if...else statement\nif (temperature > 30) {\n  console.log(\"It's a hot day!\");\n} else {\n  console.log(\"It's not too hot today.\");\n}\n\n// if...else if...else statement\nif (temperature > 30) {\n  console.log(\"It's a hot day!\");\n} else if (temperature > 20) {\n  console.log(\"It's a nice day!\");\n} else {\n  console.log(\"It's a bit chilly.\");\n}\n\n// You can also use logical operators in conditions\nlet isSunny = true;\n\nif (temperature > 25 && isSunny) {\n  console.log(\"It's a beautiful sunny day!\");\n}\n\n// Ternary operator: a shorthand for simple if-else statements\nlet message = temperature > 30 ? \"It's hot\" : \"It's not hot\";\nconsole.log(message);\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a variable \"age\" and assign it a value. Then write an if statement to check if the person is an adult (18 or older). If true, log \"You are an adult\" to the console.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return ((consoleLog.join(\",\") === \"You are an adult\" && age >= 18) || consoleLog.join(\",\") === \"\");\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create a variable \"score\" and assign it a value between 0 and 100. Write an if-else if-else statement to determine the grade: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60). Log the grade to the console.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                if (score < 0 || score > 100) return false;\n                return (consoleLog.join(\",\") === \"A\" && score >= 90)\n                  || (consoleLog.join(\",\") === \"B\" && score >= 80 && score <= 89)\n                  || (consoleLog.join(\",\") === \"C\" && score >= 70 && score <= 79)\n                  || (consoleLog.join(\",\") === \"D\" && score >= 60 && score <= 69)\n                  || (consoleLog.join(\",\") === \"F\" && score < 60);\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "The switch statement is used to perform different actions based on different conditions. It's often used as an alternative to long if...else if statements when comparing a variable to multiple values.\n\nKey points about switch statements:\n1. The switch expression is evaluated once.\n2. The value of the expression is compared with the values of each case.\n3. If there's a match, the associated block of code is executed.\n4. The break keyword breaks out of the switch block.\n5. The default keyword specifies code to run if there's no case match.\n      ",
+                "codeExample": "let day = 3;\nlet dayName;\n\nswitch (day) {\n  case 1:\n    dayName = \"Monday\";\n    break;\n  case 2:\n    dayName = \"Tuesday\";\n    break;\n  case 3:\n    dayName = \"Wednesday\";\n    break;\n  case 4:\n    dayName = \"Thursday\";\n    break;\n  case 5:\n    dayName = \"Friday\";\n    break;\n  case 6:\n    dayName = \"Saturday\";\n    break;\n  case 7:\n    dayName = \"Sunday\";\n    break;\n  default:\n    dayName = \"Invalid day\";\n}\n\nconsole.log(dayName);  // Output: Wednesday\n\n// Switch with multiple cases\nlet fruit = \"apple\";\nlet fruit_type;\n\nswitch (fruit) {\n  case \"apple\":\n  case \"pear\":\n  case \"cherry\":\n    fruit_type = \"pomaceous fruit\";\n    break;\n  case \"orange\":\n  case \"lemon\":\n  case \"lime\":\n    fruit_type = \"citrus fruit\";\n    break;\n  default:\n    fruit_type = \"unknown fruit type\";\n}\n\nconsole.log(fruit_type);  // Output: pomaceous fruit\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a variable \"month\" with a number value (1-12). Write a switch statement to determine the season (Spring: 3-5, Summer: 6-8, Autumn: 9-11, Winter: 12, 1, 2). Log the season to the console.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                if (month < 1 || month > 12) return false;\n                return (consoleLog.join(\",\") === \"Spring\" && month >= 3 && month <= 5)\n                  || (consoleLog.join(\",\") === \"Summer\" && month >= 6 && month <= 8)\n                  || (consoleLog.join(\",\") === \"Autumn\" && month >= 9 && month <= 11)\n                  || (consoleLog.join(\",\") === \"Winter\" && (month === 12 || month === 1 || month === 2));\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create a variable \"trafficLight\" with a value of \"red\", \"yellow\", or \"green\". Write a switch statement to log the appropriate action: \"Stop\" for red, \"Slow down\" for yellow, \"Go\" for green, and \"Invalid signal\" for any other value.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\",\") === \"Stop\" || consoleLog.join(\",\") === \"Slow down\" || consoleLog.join(\",\") === \"Go\" || consoleLog.join(\",\") === \"Invalid signal\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 35,
+        "icon": {
+            "codePoint": 61814,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "8",
+        "title": "Control Flow: Loops",
+        "description": "Learn how to use loops in JavaScript to repeat code execution. Understand different types of loops and when to use each one.",
+        "sections": [
+            {
+                "content": "Loops are used in JavaScript to perform repeated tasks based on a condition. Conditions typically return true or false. A loop will continue running until the defined condition returns false.\n\nThe three most common types of loops in JavaScript are:\n1. for loop\n2. while loop\n3. do...while loop\n\nLet's start with the for loop:\n\nThe for loop repeats until a specified condition evaluates to false. It's often used when you know in advance how many times the loop should run.\n\nSyntax:\nfor (initialization; condition; increment/decrement) {\n    // code to be executed\n}\n      ",
+                "codeExample": "// Basic for loop\nfor (let i = 0; i < 5; i++) {\n    console.log(i);\n}\n// Output: 0, 1, 2, 3, 4\n\n// Looping through an array\nlet fruits = ['apple', 'banana', 'cherry'];\nfor (let i = 0; i < fruits.length; i++) {\n    console.log(fruits[i]);\n}\n// Output: apple, banana, cherry\n\n// Counting backwards\nfor (let i = 5; i > 0; i--) {\n    console.log(i);\n}\n// Output: 5, 4, 3, 2, 1\n\n// Skipping iterations with continue\nfor (let i = 0; i < 5; i++) {\n    if (i === 2) {\n        continue; // Skip the rest of the loop body\n    }\n    console.log(i);\n}\n// Output: 0, 1, 3, 4\n\n// Breaking out of a loop early\nfor (let i = 0; i < 5; i++) {\n    if (i === 3) {\n        break; // Exit the loop\n    }\n    console.log(i);\n}\n// Output: 0, 1, 2\n      ",
+                "exercises": [
+                    {
+                        "question": "Write a for loop that prints the even numbers from 0 to 10 (inclusive).",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\",\") === \"0,2,4,6,8,10\";\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create an array of five colors. Use a for loop to print each color to the console, but skip the third color (index 2).",
+                        "initialCode": "let colors = ['red', 'blue', 'green', 'yellow', 'purple'];\n// Write your loop here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\",\") === \"red,blue,yellow,purple\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at while and do...while loops:\n\n1. while loop:\n   The while loop repeats as long as a specified condition evaluates to true.\n\n2. do...while loop:\n   The do...while loop is similar to the while loop, except that it always executes the code block at least once before checking the condition.\n\nThese loops are useful when you don't know in advance how many times the loop should run.\n      ",
+                "codeExample": "// while loop\nlet count = 0;\nwhile (count < 5) {\n    console.log(count);\n    count++;\n}\n// Output: 0, 1, 2, 3, 4\n\n// do...while loop\nlet num = 0;\ndo {\n    console.log(num);\n    num++;\n} while (num < 3);\n// Output: 0, 1, 2\n\n// Using while to process user input (simulated)\nlet userInput = 'y'; // Simulated user input\nwhile (userInput === 'y') {\n    console.log(\"Processing...\");\n    userInput = Math.random() < 0.5 ? 'y' : 'n'; // Randomly change input\n}\nconsole.log(\"Done processing.\");\n\n// Avoiding infinite loops\nlet x = 0;\nwhile (x < 5) {\n    console.log(x);\n    x++; // Don't forget to increment, or the loop will never end!\n}\n      ",
+                "exercises": [
+                    {
+                        "question": "Write a while loop that prints the odd numbers from 1 to 9.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\",\") === \"1,3,5,7,9\";\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Use a do...while loop to print numbers starting from 5, decrementing by 1 in each iteration, until the number becomes less than or equal to 0.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\",\") === \"5,4,3,2,1\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 40,
+        "icon": {
+            "codePoint": 61897,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "10",
+        "title": "Functions",
+        "description": "Learn how to create and use functions in JavaScript. Understand function declarations, parameters, return values, and basic concepts of scope.",
+        "sections": [
+            {
+                "content": "Functions are one of the fundamental building blocks in JavaScript. A function is a reusable block of code that performs a specific task or calculates a value.\n\nKey points about functions:\n1. They allow you to write reusable code.\n2. They can take inputs (parameters) and return outputs.\n3. They help in organizing and structuring your code.\n\nThere are several ways to define functions in JavaScript:\n1. Function Declaration\n2. Function Expression\n3. Arrow Function (ES6+)\n\nLet's start with Function Declarations:\n      ",
+                "codeExample": "// Basic function declaration\nfunction greet() {\n    console.log(\"Hello, World!\");\n}\n\n// Calling the function\ngreet();  // Output: Hello, World!\n\n// Function with parameters\nfunction greetPerson(name) {\n    console.log(\"Hello, \" + name + \"!\");\n}\n\ngreetPerson(\"Alice\");  // Output: Hello, Alice!\n\n// Function with return value\nfunction add(a, b) {\n    return a + b;\n}\n\nlet result = add(5, 3);\nconsole.log(result);  // Output: 8\n\n// Function with multiple parameters and conditional return\nfunction compareNumbers(a, b) {\n    if (a > b) {\n        return \"a is greater\";\n    } else if (b > a) {\n        return \"b is greater\";\n    } else {\n        return \"a and b are equal\";\n    }\n}\n\nconsole.log(compareNumbers(5, 3));  // Output: a is greater\nconsole.log(compareNumbers(2, 7));  // Output: b is greater\nconsole.log(compareNumbers(4, 4));  // Output: a and b are equal\n      ",
+                "exercises": [
+                    {
+                        "question": "Write a function called \"isEven\" that takes a number as a parameter and returns true if the number is even, and false otherwise.",
+                        "initialCode": "// Write your function here\n",
+                        "validate": "              const isValid = (function() {\n                return isEven(4) === true && isEven(7) === false;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create a function called \"getFullName\" that takes two parameters, firstName and lastName, and returns the full name as a single string.",
+                        "initialCode": "// Write your function here\n",
+                        "validate": "              const isValid = (function() {\n                return getFullName(\"John\", \"Doe\") === \"John Doe\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at Function Expressions and Arrow Functions:\n\nFunction Expression:\nA function expression is similar to a function declaration, but the function is assigned to a variable.\n\nArrow Function:\nArrow functions provide a shorter syntax for writing function expressions. They were introduced in ES6 (ECMAScript 2015).\n\nBoth function expressions and arrow functions are often used as anonymous functions, which are functions without a name, typically used as arguments to other functions.\n      ",
+                "codeExample": "// Function Expression\nlet greet = function(name) {\n    return \"Hello, \" + name + \"!\";\n};\n\nconsole.log(greet(\"Bob\"));  // Output: Hello, Bob!\n\n// Arrow Function\nlet add = (a, b) => a + b;\n\nconsole.log(add(5, 3));  // Output: 8\n\n// Arrow Function with multiple statements\nlet compareNumbers = (a, b) => {\n    if (a > b) {\n        return \"a is greater\";\n    } else if (b > a) {\n        return \"b is greater\";\n    } else {\n        return \"a and b are equal\";\n    }\n};\n\nconsole.log(compareNumbers(5, 3));  // Output: a is greater\n\n// Using functions as arguments (callback functions)\nlet numbers = [1, 2, 3, 4, 5];\n\nlet doubledNumbers = numbers.map(num => num * 2);\nconsole.log(doubledNumbers);  // Output: [2, 4, 6, 8, 10]\n\nlet evenNumbers = numbers.filter(num => num % 2 === 0);\nconsole.log(evenNumbers);  // Output: [2, 4]\n      ",
+                "exercises": [
+                    {
+                        "question": "Write an arrow function called \"square\" that takes a number as input and returns its square.",
+                        "initialCode": "// Write your arrow function here\n",
+                        "validate": "              const isValid = (function() {\n                return square(4) === 16 && square(3) === 9;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create an array of numbers. Use the filter function with an arrow function to create a new array containing only the numbers greater than 5.",
+                        "initialCode": "let numbers = [2, 8, 4, 10, 1, 7];\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return JSON.stringify(filteredNumbers) === \"[8,10,7]\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 45,
+        "icon": {
+            "codePoint": 61760,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "11",
+        "title": "Arrays",
+        "description": "Learn about arrays in JavaScript: how to create them, access and modify elements, and use common array methods.",
+        "sections": [
+            {
+                "content": "Arrays in JavaScript are used to store multiple values in a single variable. They are ordered collections that can hold various types of data, including numbers, strings, objects, and even other arrays.\n\nKey points about arrays:\n1. Arrays are zero-indexed, meaning the first element is at index 0.\n2. Array length is dynamic; you can add or remove elements at any time.\n3. Arrays in JavaScript can hold mixed data types.\n\nLet's start with creating arrays and accessing elements:\n      ",
+                "codeExample": "// Creating an array\nlet fruits = ['apple', 'banana', 'orange'];\n\n// Accessing elements\nconsole.log(fruits[0]);  // Output: apple\nconsole.log(fruits[2]);  // Output: orange\n\n// Array length\nconsole.log(fruits.length);  // Output: 3\n\n// Modifying elements\nfruits[1] = 'grape';\nconsole.log(fruits);  // Output: ['apple', 'grape', 'orange']\n\n// Adding elements to the end\nfruits.push('mango');\nconsole.log(fruits);  // Output: ['apple', 'grape', 'orange', 'mango']\n\n// Removing the last element\nlet lastFruit = fruits.pop();\nconsole.log(lastFruit);  // Output: mango\nconsole.log(fruits);  // Output: ['apple', 'grape', 'orange']\n\n// Adding elements to the beginning\nfruits.unshift('kiwi');\nconsole.log(fruits);  // Output: ['kiwi', 'apple', 'grape', 'orange']\n\n// Removing the first element\nlet firstFruit = fruits.shift();\nconsole.log(firstFruit);  // Output: kiwi\nconsole.log(fruits);  // Output: ['apple', 'grape', 'orange']\n\n// Finding the index of an element\nlet index = fruits.indexOf('grape');\nconsole.log(index);  // Output: 1\n\n// Checking if an element exists\nlet hasOrange = fruits.includes('orange');\nconsole.log(hasOrange);  // Output: true\n      ",
+                "exercises": [
+                    {
+                        "question": "Create an array called \"colors\" with five different color names. Then change the third color (index 2) to \"purple\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return colors.length === 5 && colors[2] === \"purple\";\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Using the \"colors\" array from the previous exercise, add \"pink\" to the end and \"black\" to the beginning of the array.",
+                        "initialCode": "// Assuming colors array exists\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return colors[0] === \"black\" && colors[colors.length - 1] === \"pink\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at some powerful array methods that allow you to iterate, transform, and filter arrays:\n\n1. forEach(): Executes a provided function once for each array element.\n2. map(): Creates a new array with the results of calling a provided function on every element.\n3. filter(): Creates a new array with all elements that pass the test implemented by the provided function.\n4. find(): Returns the value of the first element in the array that satisfies the provided testing function.\n5. some(): Tests whether at least one element in the array passes the test implemented by the provided function.\n6. every(): Tests whether all elements in the array pass the test implemented by the provided function.\n7. reduce(): Executes a reducer function on each element of the array, resulting in a single output value.\n\nThese methods are powerful tools for working with arrays and are commonly used in modern JavaScript programming.\n      ",
+                "codeExample": "let numbers = [1, 2, 3, 4, 5];\n\n// forEach\nnumbers.forEach(num => console.log(num));\n// Output: 1, 2, 3, 4, 5 (each on a new line)\n\n// map\nlet doubled = numbers.map(num => num * 2);\nconsole.log(doubled);  // Output: [2, 4, 6, 8, 10]\n\n// filter\nlet evenNumbers = numbers.filter(num => num % 2 === 0);\nconsole.log(evenNumbers);  // Output: [2, 4]\n\n// find\nlet firstEven = numbers.find(num => num % 2 === 0);\nconsole.log(firstEven);  // Output: 2\n\n// some\nlet hasEven = numbers.some(num => num % 2 === 0);\nconsole.log(hasEven);  // Output: true\n\n// every\nlet allPositive = numbers.every(num => num > 0);\nconsole.log(allPositive);  // Output: true\n\n// reduce\nlet sum = numbers.reduce((acc, num) => acc + num, 0);\nconsole.log(sum);  // Output: 15\n\n// Chaining methods\nlet result = numbers\n  .filter(num => num % 2 === 0)\n  .map(num => num * 3)\n  .reduce((acc, num) => acc + num, 0);\nconsole.log(result);  // Output: 18 (2*3 + 4*3)\n      ",
+                "exercises": [
+                    {
+                        "question": "Given an array of numbers, use the map method to create a new array where each number is squared.",
+                        "initialCode": "let nums = [1, 2, 3, 4, 5];\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return JSON.stringify(squaredNums) === \"[1,4,9,16,25]\";\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Using the filter method, create a new array that contains only the strings with a length greater than 3 from the given array.",
+                        "initialCode": "let words = ['cat', 'dog', 'elephant', 'fish', 'giraffe'];\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return JSON.stringify(longWords) === '[\"elephant\",\"fish\",\"giraffe\"]';\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 50,
+        "icon": {
+            "codePoint": 61841,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "12",
+        "title": "Objects",
+        "description": "Learn about objects in JavaScript: how to create them, access and modify properties, add methods, and use common object operations.",
+        "sections": [
+            {
+                "content": "Objects in JavaScript are used to store keyed collections of various data and more complex entities. They are one of the fundamental data types in JavaScript and form the building blocks for modern JavaScript.\n\nKey points about objects:\n1. Objects are collections of key-value pairs (properties and values).\n2. Properties can be accessed using dot notation or bracket notation.\n3. Objects can contain methods (functions as values).\n4. Objects are mutable; you can add, modify, or delete properties after creation.\n\nLet's start with creating objects and working with properties:\n      ",
+                "codeExample": "// Creating an object\nlet person = {\n  name: \"John\",\n  age: 30,\n  city: \"New York\"\n};\n\n// Accessing properties\nconsole.log(person.name);  // Output: John\nconsole.log(person['age']);  // Output: 30\n\n// Modifying properties\nperson.age = 31;\nperson['city'] = \"San Francisco\";\nconsole.log(person);  // Output: {name: \"John\", age: 31, city: \"San Francisco\"}\n\n// Adding new properties\nperson.job = \"Developer\";\nconsole.log(person.job);  // Output: Developer\n\n// Deleting properties\ndelete person.city;\nconsole.log(person.city);  // Output: undefined\n\n// Checking if a property exists\nconsole.log('name' in person);  // Output: true\nconsole.log('city' in person);  // Output: false\n\n// Object methods\nlet car = {\n  brand: \"Toyota\",\n  model: \"Corolla\",\n  year: 2020,\n  start: function() {\n    console.log(\"The car is starting...\");\n  }\n};\n\ncar.start();  // Output: The car is starting...\n\n// Shorthand method syntax (ES6+)\nlet calculator = {\n  add(a, b) {\n    return a + b;\n  },\n  subtract(a, b) {\n    return a - b;\n  }\n};\n\nconsole.log(calculator.add(5, 3));  // Output: 8\nconsole.log(calculator.subtract(10, 4));  // Output: 6\n      ",
+                "exercises": [
+                    {
+                        "question": "Create an object called \"book\" with properties for title, author, and year. Then add a new property called \"genre\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return book.hasOwnProperty(\"title\") && book.hasOwnProperty(\"author\") && book.hasOwnProperty(\"year\") && book.hasOwnProperty(\"genre\");\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create an object called \"circle\" with a property \"radius\". Add a method called \"area\" that returns the area of the circle (π * r^2). Use 3.14 for π.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return typeof circle.area === \"function\" && Math.abs(circle.area() - (3.14 * circle.radius * circle.radius)) < 0.01;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at some more advanced object concepts and operations:\n\n1. Object.keys(): Returns an array of a given object's own enumerable property names.\n2. Object.values(): Returns an array of a given object's own enumerable property values.\n3. Object.entries(): Returns an array of a given object's own enumerable string-keyed property [key, value] pairs.\n4. Object spread operator (...): Allows you to create a shallow copy of an object or merge objects.\n5. Object destructuring: Allows you to extract multiple properties from an object and assign them to variables in a single statement.\n\nThese features are commonly used in modern JavaScript for working with objects efficiently.\n      ",
+                "codeExample": "let person = {\n  name: \"Alice\",\n  age: 28,\n  city: \"London\"\n};\n\n// Object.keys()\nconsole.log(Object.keys(person));  // Output: [\"name\", \"age\", \"city\"]\n\n// Object.values()\nconsole.log(Object.values(person));  // Output: [\"Alice\", 28, \"London\"]\n\n// Object.entries()\nconsole.log(Object.entries(person));  \n// Output: [[\"name\", \"Alice\"], [\"age\", 28], [\"city\", \"London\"]]\n\n// Spread operator for object copying\nlet personCopy = {...person};\nconsole.log(personCopy);  // Output: {name: \"Alice\", age: 28, city: \"London\"}\n\n// Spread operator for merging objects\nlet personalInfo = {name: \"Bob\", age: 25};\nlet workInfo = {company: \"Tech Co\", position: \"Developer\"};\nlet bobComplete = {...personalInfo, ...workInfo};\nconsole.log(bobComplete);  \n// Output: {name: \"Bob\", age: 25, company: \"Tech Co\", position: \"Developer\"}\n\n// Object destructuring\nlet {name, age} = person;\nconsole.log(name);  // Output: Alice\nconsole.log(age);   // Output: 28\n\n// Destructuring with renaming\nlet {name: personName, age: personAge} = person;\nconsole.log(personName);  // Output: Alice\n\n// Destructuring in function parameters\nfunction printPerson({name, age}) {\n  console.log(`${name} is ${age} years old.`);\n}\nprintPerson(person);  // Output: Alice is 28 years old.\n      ",
+                "exercises": [
+                    {
+                        "question": "Given an object \"student\" with properties for name, age, and grades (an array), use object destructuring to extract these properties into separate variables.",
+                        "initialCode": "let student = {name: \"Emma\", age: 20, grades: [85, 90, 92]};\n// Write your destructuring code here\n",
+                        "validate": "              const isValid = (function() {\n                return name === \"Emma\" && age === 20 && JSON.stringify(grades) === \"[85,90,92]\";\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Create two objects, \"personalDetails\" with properties name and age, and \"professionalDetails\" with properties job and company. Use the spread operator to merge these into a new object called \"person\".",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return person.name && person.age && person.job && person.company;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Beginner",
+        "durationMinutes": 55,
+        "icon": {
+            "codePoint": 61733,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "13",
+        "title": "Asynchronous JavaScript",
+        "description": "Learn about asynchronous programming in JavaScript, including callbacks, promises, and async/await syntax.",
+        "sections": [
+            {
+                "content": "Asynchronous programming in JavaScript allows you to perform long-running operations without blocking the execution of other code. This is crucial for tasks like making API calls, reading files, or any operation that might take an unpredictable amount of time.\n\nKey concepts in asynchronous JavaScript:\n1. Callbacks\n2. Promises\n3. Async/Await\n\nLet's start with callbacks, the traditional way of handling asynchronous operations:\n\nCallbacks are functions passed as arguments to other functions, to be executed once an asynchronous operation has completed.\n      ",
+                "codeExample": "// Simulating an asynchronous operation\nfunction fetchData(callback) {\n  setTimeout(() => {\n    const data = { id: 1, name: \"John Doe\" };\n    callback(data);\n  }, 2000);  // Simulates a 2-second delay\n}\n\nconsole.log(\"Starting data fetch...\");\n\nfetchData((result) => {\n  console.log(\"Data received:\", result);\n});\n\nconsole.log(\"Data fetch initiated.\");\n\n// Output:\n// Starting data fetch...\n// Data fetch initiated.\n// (After 2 seconds) Data received: { id: 1, name: \"John Doe\" }\n\n// Callback hell example (nested callbacks)\nfunction step1(callback) {\n  setTimeout(() => {\n    console.log(\"Step 1 complete\");\n    callback();\n  }, 1000);\n}\n\nfunction step2(callback) {\n  setTimeout(() => {\n    console.log(\"Step 2 complete\");\n    callback();\n  }, 1000);\n}\n\nfunction step3(callback) {\n  setTimeout(() => {\n    console.log(\"Step 3 complete\");\n    callback();\n  }, 1000);\n}\n\nstep1(() => {\n  step2(() => {\n    step3(() => {\n      console.log(\"All steps complete\");\n    });\n  });\n});\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"delayedGreeting\" that takes a name and a callback function as parameters. The function should use setTimeout to call the callback after a 2-second delay, passing a greeting message with the given name.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                let result;\n                delayedGreeting(\"Alice\", (message) => {\n                  result = message;\n                });\n                return result === \"Hello, Alice!\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Promises provide a more structured way to handle asynchronous operations, avoiding the \"callback hell\" problem. A Promise represents a value that may not be available yet but will be resolved at some point in the future.\n\nPromises have three states:\n1. Pending: Initial state, neither fulfilled nor rejected.\n2. Fulfilled: The operation completed successfully.\n3. Rejected: The operation failed.\n\nPromises use .then() for success and .catch() for error handling.\n\nAfter Promises, we'll look at the async/await syntax, which is built on top of Promises and provides a more synchronous-looking way to write asynchronous code.\n      ",
+                "codeExample": "// Creating a Promise\nconst myPromise = new Promise((resolve, reject) => {\n  setTimeout(() => {\n    const randomNumber = Math.random();\n    if (randomNumber > 0.5) {\n      resolve(randomNumber);\n    } else {\n      reject(\"Number too low\");\n    }\n  }, 1000);\n});\n\nmyPromise\n  .then(result => console.log(\"Success:\", result))\n  .catch(error => console.log(\"Error:\", error));\n\n// Chaining Promises\nfunction step1() {\n  return new Promise(resolve => {\n    setTimeout(() => {\n      console.log(\"Step 1 complete\");\n      resolve(100);\n    }, 1000);\n  });\n}\n\nfunction step2(value) {\n  return new Promise(resolve => {\n    setTimeout(() => {\n      console.log(\"Step 2 complete\");\n      resolve(value + 200);\n    }, 1000);\n  });\n}\n\nstep1()\n  .then(result => step2(result))\n  .then(finalResult => console.log(\"Final result:\", finalResult))\n  .catch(error => console.log(\"Error:\", error));\n\n// Async/Await\nasync function runSteps() {\n  try {\n    const step1Result = await step1();\n    const step2Result = await step2(step1Result);\n    console.log(\"Final result:\", step2Result);\n  } catch (error) {\n    console.log(\"Error:\", error);\n  }\n}\n\nrunSteps();\n\n// Fetching data from an API (if running in a browser environment)\n// async function fetchUser(id) {\n//   try {\n//     const response = await fetch(`https://api.example.com/users/${id}`);\n//     const user = await response.json();\n//     console.log(\"User:\", user);\n//   } catch (error) {\n//     console.log(\"Error fetching user:\", error);\n//   }\n// }\n\n// fetchUser(1);\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"delayedMultiply\" that takes two numbers as parameters and returns a Promise. The Promise should resolve after a 1-second delay with the product of the two numbers.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return delayedMultiply(2, 3) instanceof Promise;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Using async/await, create a function called \"runMultiplication\" that uses the delayedMultiply function from the previous exercise to multiply 3 and 4, then multiply the result by 2. Log the final result.",
+                        "initialCode": "// Assume delayedMultiply function exists\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                let result;\n                runMultiplication().then(res => result = res);\n                return result === 24;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 60,
+        "icon": {
+            "codePoint": 61753,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "14",
+        "title": "ES6+ Features: Modern JavaScript Syntax",
+        "description": "Explore modern JavaScript syntax and features introduced in ES6 and beyond, enhancing code readability and functionality.",
+        "sections": [
+            {
+                "content": "ES6 (ECMAScript 2015) and subsequent versions have introduced many new features that make JavaScript more powerful and expressive. In this lesson, we'll cover some of the most important modern JavaScript features:\n\n1. let and const\n2. Arrow functions\n3. Template literals\n4. Destructuring\n5. Spread and rest operators\n6. Enhanced object literals\n7. Default parameters\n8. Classes\n9. Modules\n\nLet's start with some of the fundamental syntax changes:\n      ",
+                "codeExample": "// 1. let and const\nlet variable = 'can be reassigned';\nconst constant = 'cannot be reassigned';\n\n// Block scoping\n{\n  let blockScoped = 'only available in this block';\n  var functionScoped = 'available throughout the function';\n}\n// console.log(blockScoped); // ReferenceError\nconsole.log(functionScoped); // Works fine\n\n// 2. Arrow functions\nconst add = (a, b) => a + b;\nconst square = x => x * x; // Parentheses optional for single parameter\nconst logMessage = () => console.log('Hello!'); // No parameters\n\n// 3. Template literals\nconst name = 'Alice';\nconsole.log(`Hello, ${name}!`); // String interpolation\nconst multiLine = `\n  This is a\n  multi-line string\n`;\n\n// 4. Destructuring\nconst person = { name: 'Bob', age: 30 };\nconst { name: personName, age } = person;\nconsole.log(personName, age); // Bob 30\n\nconst numbers = [1, 2, 3];\nconst [first, second] = numbers;\nconsole.log(first, second); // 1 2\n\n// 5. Spread and rest operators\nconst arr1 = [1, 2, 3];\nconst arr2 = [...arr1, 4, 5]; // Spread\nconsole.log(arr2); // [1, 2, 3, 4, 5]\n\nconst sum = (...args) => args.reduce((a, b) => a + b, 0); // Rest\nconsole.log(sum(1, 2, 3, 4)); // 10\n\n// 6. Enhanced object literals\nconst x = 1, y = 2;\nconst point = { \n  x, \n  y, \n  moveBy(dx, dy) {\n    this.x += dx;\n    this.y += dy;\n  }\n};\n\n// 7. Default parameters\nfunction greet(name = 'Guest') {\n  console.log(`Hello, ${name}!`);\n}\ngreet(); // Hello, Guest!\ngreet('Alice'); // Hello, Alice!\n      ",
+                "exercises": [
+                    {
+                        "question": "Create an arrow function called \"calculateArea\" that takes the radius of a circle as a parameter and returns the area. Use the const PI = 3.14159 in your calculation.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return Math.abs(calculateArea(5) - 78.53975) < 0.0001;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Given an object person = { name: \"John\", age: 30, city: \"New York\" }, use destructuring to extract name and age into variables. Then, use a template literal to log \"John is 30 years old.\"",
+                        "initialCode": "const person = { name: \"John\", age: 30, city: \"New York\" };\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return consoleLog.join(\" \").includes(\"John is 30 years old\");\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at some more advanced ES6+ features:\n\n8. Classes: ES6 introduced a more intuitive way to create objects and implement inheritance.\n\n9. Modules: ES6 modules allow you to split your code into separate files, making it easier to maintain and organize large projects.\n\n10. Promises and async/await: We covered these in the previous lesson on asynchronous JavaScript, but they're worth mentioning again as key ES6+ features.\n\n11. Array methods: ES6+ introduced several useful array methods like find(), findIndex(), and includes().\n\n12. Object methods: Object.assign() and Object.entries() are powerful additions for working with objects.\n      ",
+                "codeExample": "// 8. Classes\nclass Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  \n  speak() {\n    console.log(`${this.name} makes a sound.`);\n  }\n}\n\nclass Dog extends Animal {\n  speak() {\n    console.log(`${this.name} barks.`);\n  }\n}\n\nconst dog = new Dog('Rex');\ndog.speak(); // Rex barks.\n\n// 9. Modules\n// In a separate file named math.js:\n// export const add = (a, b) => a + b;\n// export const subtract = (a, b) => a - b;\n\n// In your main file:\n// import { add, subtract } from './math.js';\n// console.log(add(5, 3)); // 8\n\n// 11. New Array methods\nconst numbers = [1, 2, 3, 4, 5];\nconst evenNumber = numbers.find(n => n % 2 === 0);\nconsole.log(evenNumber); // 2\n\nconst index = numbers.findIndex(n => n > 3);\nconsole.log(index); // 3\n\nconsole.log(numbers.includes(3)); // true\n\n// 12. New Object methods\nconst obj1 = { a: 1, b: 2 };\nconst obj2 = { c: 3, d: 4 };\nconst combined = Object.assign({}, obj1, obj2);\nconsole.log(combined); // { a: 1, b: 2, c: 3, d: 4 }\n\nconst entries = Object.entries(combined);\nconsole.log(entries); // [['a', 1], ['b', 2], ['c', 3], ['d', 4]]\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a class called \"Rectangle\" with a constructor that takes width and height. Add a method called \"area\" that returns the area of the rectangle. Then create a subclass called \"Square\" that only requires one side length in its constructor.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return new Rectangle(4, 5).area() === 20 && new Square(4).area() === 16;\n              })();\n            ",
+                        "isCompleted": false
+                    },
+                    {
+                        "question": "Use the find() method to find the first number greater than 10 in the array [5, 12, 8, 130, 44]. Then, use findIndex() to find the index of the first even number in the same array.",
+                        "initialCode": "const numbers = [5, 12, 8, 130, 44];\n// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                return foundNumber === 12 && foundIndex === 1;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 60,
+        "icon": {
+            "codePoint": 61978,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "15",
+        "title": "Error Handling in JavaScript",
+        "description": "Learn how to handle errors effectively in JavaScript using try-catch blocks, throw statements, and understand common error types.",
+        "sections": [
+            {
+                "content": "Error handling is a crucial part of writing robust JavaScript code. It allows you to gracefully manage unexpected situations and provide meaningful feedback to users or developers.\n\nKey concepts in JavaScript error handling:\n1. try-catch blocks\n2. throw statement\n3. Error object and its properties\n4. Common built-in error types\n5. finally clause\n6. Error handling in asynchronous code\n\nLet's start with the basics of try-catch and throw:\n      ",
+                "codeExample": "// Basic try-catch block\ntry {\n  // Code that might throw an error\n  let x = y + 5; // y is not defined\n} catch (error) {\n  console.log(\"An error occurred:\", error.message);\n}\n\n// Output: An error occurred: y is not defined\n\n// Using throw to create custom errors\nfunction divide(a, b) {\n  if (b === 0) {\n    throw new Error(\"Division by zero is not allowed\");\n  }\n  return a / b;\n}\n\ntry {\n  console.log(divide(10, 2)); // Works fine\n  console.log(divide(10, 0)); // This will throw an error\n} catch (error) {\n  console.log(\"Caught an error:\", error.message);\n}\n\n// Using finally\nfunction openFile(filename) {\n  let file = null;\n  try {\n    // Simulating file operations\n    file = { name: filename, content: \"Some content\" };\n    // Simulating an error\n    if (filename === \"error.txt\") {\n      throw new Error(\"File not found\");\n    }\n    console.log(\"File opened successfully\");\n  } catch (error) {\n    console.log(\"Error opening file:\", error.message);\n  } finally {\n    // This block always executes\n    if (file) {\n      console.log(\"Closing file:\", file.name);\n    }\n  }\n}\n\nopenFile(\"test.txt\");\nopenFile(\"error.txt\");\n\n// Accessing error properties\ntry {\n  throw new Error(\"Something went wrong\");\n} catch (error) {\n  console.log(\"Name:\", error.name);\n  console.log(\"Message:\", error.message);\n  console.log(\"Stack:\", error.stack);\n}\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"squareRoot\" that takes a number as input. If the input is negative, throw an error with the message \"Cannot calculate square root of a negative number\". Use a try-catch block to handle the error when calling the function.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                try {\n                  squareRoot(-4);\n                  return false;\n                } catch (e) {\n                  return e.message === \"Cannot calculate square root of a negative number\";\n                }\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "JavaScript has several built-in error types that you might encounter or use:\n\n1. Error: The base type for all errors\n2. SyntaxError: For parsing errors\n3. ReferenceError: When a variable is not defined\n4. TypeError: When a value is not of the expected type\n5. RangeError: When a value is not in the set or range of allowed values\n6. URIError: When a URI handling function is misused\n\nError handling in asynchronous code requires special attention, especially when working with Promises or async/await syntax.\n      ",
+                "codeExample": "// Different types of errors\ntry {\n  // SyntaxError\n  eval(\"Hello World\");\n} catch (e) {\n  console.log(e instanceof SyntaxError);  // true\n  console.log(\"SyntaxError:\", e.message);\n}\n\ntry {\n  // ReferenceError\n  console.log(undefinedVariable);\n} catch (e) {\n  console.log(e instanceof ReferenceError);  // true\n  console.log(\"ReferenceError:\", e.message);\n}\n\ntry {\n  // TypeError\n  null.f();\n} catch (e) {\n  console.log(e instanceof TypeError);  // true\n  console.log(\"TypeError:\", e.message);\n}\n\ntry {\n  // RangeError\n  console.log(new Array(-1));\n} catch (e) {\n  console.log(e instanceof RangeError);  // true\n  console.log(\"RangeError:\", e.message);\n}\n\n// Error handling in Promises\nfunction fetchData() {\n  return new Promise((resolve, reject) => {\n    // Simulating an error in an asynchronous operation\n    setTimeout(() => reject(new Error(\"Failed to fetch data\")), 1000);\n  });\n}\n\nfetchData()\n  .then(data => console.log(data))\n  .catch(error => console.log(\"Caught error:\", error.message));\n\n// Error handling with async/await\nasync function fetchDataAsync() {\n  try {\n    const data = await fetchData();\n    console.log(data);\n  } catch (error) {\n    console.log(\"Caught error in async function:\", error.message);\n  }\n}\n\nfetchDataAsync();\n      ",
+                "exercises": [
+                    {
+                        "question": "Create an async function called \"fetchUser\" that simulates fetching a user from an API. The function should return a Promise that resolves with a user object if the id is a number, and rejects with an error \"Invalid user id\" if it's not. Use a try-catch block when calling this function to handle potential errors.",
+                        "initialCode": "// Write your code here\n",
+                        "validate": "              const isValid = (function() {\n                try {\n                  fetchUser('abc');\n                  return false;\n                } catch (e) {\n                  return e.message === \"Invalid user id\";\n                }\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 45,
+        "icon": {
+            "codePoint": 61700,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "16",
+        "title": "JSON in JavaScript",
+        "description": "Learn about JSON (JavaScript Object Notation), its structure, how to work with it in JavaScript, and its common use cases in web development.",
+        "sections": [
+            {
+                "content": "JSON (JavaScript Object Notation) is a lightweight data-interchange format that is easy for humans to read and write and easy for machines to parse and generate. Despite its name, JSON is language-independent and is used by many programming languages.\n\nKey points about JSON:\n1. It's a text format that is completely language independent.\n2. It's built on two structures: \n   - A collection of name/value pairs (similar to a JavaScript object)\n   - An ordered list of values (similar to a JavaScript array)\n3. JSON supports the following data types:\n   - String\n   - Number\n   - Boolean\n   - null\n   - Object\n   - Array\n\nLet's start with the basic structure and syntax of JSON:\n      ",
+                "codeExample": "// JSON Object\nlet person = {\n  \"name\": \"John Doe\",\n  \"age\": 30,\n  \"city\": \"New York\",\n  \"isStudent\": false,\n  \"grades\": [85, 90, 92],\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"zipCode\": \"10001\"\n  }\n};\n\n// JSON Array\nlet cities = [\n  {\n    \"name\": \"New York\",\n    \"population\": 8419000\n  },\n  {\n    \"name\": \"Los Angeles\",\n    \"population\": 3898000\n  },\n  {\n    \"name\": \"Chicago\",\n    \"population\": 2716000\n  }\n];\n\n// Accessing JSON data\nconsole.log(person.name);  // Output: John Doe\nconsole.log(person[\"age\"]);  // Output: 30\nconsole.log(person.address.street);  // Output: 123 Main St\nconsole.log(cities[0].name);  // Output: New York\n\n// JSON doesn't support functions or undefined values\nlet invalidJSON = {\n  \"function\": function() { console.log(\"This is not valid in JSON\"); },\n  \"undefined\": undefined\n};\n// This will cause issues when trying to convert to a JSON string\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a JSON object representing a book with properties for title, author, publication year, and an array of chapters (each chapter should have a title and page count).",
+                        "initialCode": "// Write your JSON object here\nlet book = \n",
+                        "validate": "              const isValid = (function() {\n                return book.title && book.author && book.year && Array.isArray(book.chapters) &&\n                  book.chapters.every(ch => ch.title && typeof ch.pages === \"number\");\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "JavaScript provides built-in methods to work with JSON:\n\n1. JSON.stringify(): Converts a JavaScript object to a JSON string\n2. JSON.parse(): Parses a JSON string and returns a JavaScript object\n\nThese methods are crucial when sending data to or receiving data from a server, as data is typically transmitted as strings.\n\nAdditionally, we'll look at:\n- Working with nested JSON structures\n- Handling JSON in API responses (using fetch as an example)\n- Common pitfalls when working with JSON\n      ",
+                "codeExample": "// Converting JavaScript object to JSON string\nlet person = {\n  name: \"Alice\",\n  age: 28,\n  city: \"London\"\n};\n\nlet jsonString = JSON.stringify(person);\nconsole.log(jsonString);\n// Output: {\"name\":\"Alice\",\"age\":28,\"city\":\"London\"}\n\n// Parsing JSON string to JavaScript object\nlet jsonData = '{\"name\":\"Bob\",\"age\":35,\"city\":\"Paris\"}';\nlet parsedData = JSON.parse(jsonData);\nconsole.log(parsedData.name);  // Output: Bob\n\n// Working with nested JSON\nlet company = {\n  name: \"Tech Corp\",\n  employees: [\n    {name: \"John\", position: \"Developer\"},\n    {name: \"Sarah\", position: \"Designer\"}\n  ],\n  address: {\n    street: \"123 Tech St\",\n    city: \"San Francisco\"\n  }\n};\n\nconsole.log(company.employees[1].position);  // Output: Designer\nconsole.log(company.address.city);  // Output: San Francisco\n\n// Stringifying with formatting\nconsole.log(JSON.stringify(company, null, 2));\n// Output:\n// {\n//   \"name\": \"Tech Corp\",\n//   \"employees\": [\n//     {\n//       \"name\": \"John\",\n//       \"position\": \"Developer\"\n//     },\n//     {\n//       \"name\": \"Sarah\",\n//       \"position\": \"Designer\"\n//     }\n//   ],\n//   \"address\": {\n//     \"street\": \"123 Tech St\",\n//     \"city\": \"San Francisco\"\n//   }\n// }\n\n// Example of fetching JSON data from an API\n// Note: This would typically be run in a browser environment\n// fetch('https://api.example.com/data')\n//   .then(response => response.json())\n//   .then(data => console.log(data))\n//   .catch(error => console.error('Error:', error));\n\n// Common pitfall: JSON.parse() with invalid JSON\ntry {\n  JSON.parse('{\"name\": \"John\", age: 30}');  // Missing quotes around \"age\"\n} catch (error) {\n  console.error('Invalid JSON:', error.message);\n}\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"filterAndStringify\" that takes an array of objects and a property name. The function should filter the array to include only objects where the specified property exists, and then return the filtered array as a JSON string.",
+                        "initialCode": "// Write your function here\nfunction filterAndStringify(array, property) {\n  // Your code here\n}\n\n// Test data\nlet data = [\n  {id: 1, name: \"Alice\"},\n  {id: 2, age: 30},\n  {id: 3, name: \"Bob\", age: 25}\n];\n\nconsole.log(filterAndStringify(data, \"name\"));\n",
+                        "validate": "              const isValid = (function() {\n                return filterAndStringify(data, \"name\") === '[{\"id\":1,\"name\":\"Alice\"},{\"id\":3,\"name\":\"Bob\",\"age\":25}]';\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 40,
+        "icon": {
+            "codePoint": 61804,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "17",
+        "title": "Regular Expressions in JavaScript",
+        "description": "Learn how to use regular expressions in JavaScript for pattern matching and text manipulation. Understand regex syntax, methods, and common use cases.",
+        "sections": [
+            {
+                "content": "Regular expressions (regex) are powerful tools for pattern matching and manipulation of strings. In JavaScript, they are objects that describe a pattern of characters.\n\nKey points about regular expressions:\n1. They are created using /pattern/flags or new RegExp(pattern, flags)\n2. They can be used with string methods like match(), search(), replace()\n3. The RegExp object has methods like test() and exec()\n4. Special characters and metacharacters allow for flexible pattern matching\n\nLet's start with basic regex creation and usage:\n      ",
+                "codeExample": "// Creating a regular expression\nlet regex1 = /hello/;\nlet regex2 = new RegExp('world');\n\n// Basic pattern matching\nlet text = \"Hello, world!\";\nconsole.log(regex1.test(text));  // false (case-sensitive)\nconsole.log(regex2.test(text));  // true\n\n// Case-insensitive matching\nlet regex3 = /hello/i;\nconsole.log(regex3.test(text));  // true\n\n// Finding matches\nlet matches = text.match(/o/g);\nconsole.log(matches);  // ['o', 'o']\n\n// Replacing with regex\nlet newText = text.replace(/o/g, '0');\nconsole.log(newText);  // Hell0, w0rld!\n\n// Regex metacharacters\nlet digit = /d/;  // Matches any digit\nlet word = /w+/;  // Matches one or more word characters\nlet whitespace = /s/;  // Matches whitespace\n\nconsole.log(digit.test(\"There are 3 apples\"));  // true\nconsole.log(word.exec(\"Hello world\"));  // [\"Hello\"]\nconsole.log(\"A B\".replace(whitespace, '_'));  // \"A_B\"\n\n// Character classes\nlet vowels = /[aeiou]/gi;  // Matches any vowel, case-insensitive\nconsole.log(\"Hello World\".match(vowels));  // [\"e\",\"o\",\"o\"]\n\n// Quantifiers\nlet threeDigs = /d{3}/;  // Matches exactly three digits\nconsole.log(threeDigs.test(\"123\"));  // true\nconsole.log(threeDigs.test(\"12\"));   // false\n\n// Start and end of string\nlet startHi = /^Hi/;\nlet endBye = /Bye$/;\nconsole.log(startHi.test(\"Hi there\"));  // true\nconsole.log(endBye.test(\"Goodbye\"));    // true\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a regular expression that matches any string that starts with \"Java\" followed by any characters. Test it with the strings \"JavaScript\", \"Java\", and \"JavaBeans\".",
+                        "initialCode": "// Write your regex and tests here\n",
+                        "validate": "              const isValid = (function() {\n                return regex.test(\"JavaScript\") && regex.test(\"Java\") && regex.test(\"JavaBeans\") && !regex.test(\"Python\");\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at more advanced regex concepts and common use cases:\n\n1. Grouping and capturing\n2. Alternation\n3. Lookahead and lookbehind assertions\n4. Common regex patterns (email, URL, etc.)\n5. Regex flags (g, i, m, s, u, y)\n6. Regex performance considerations\n\nRemember, while powerful, regular expressions can become complex. It's often a good practice to build them up gradually and test each step.\n      ",
+                "codeExample": "// Grouping and capturing\nlet dateRegex = /(d{4})-(d{2})-(d{2})/;\nlet date = \"2023-05-15\";\nlet [fullMatch, year, month, day] = date.match(dateRegex);\nconsole.log(year, month, day);  // 2023 05 15\n\n// Alternation\nlet fruitRegex = /apple|banana|cherry/;\nconsole.log(fruitRegex.test(\"I like banana\"));  // true\n\n// Lookahead and lookbehind\nlet password = /(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;\n// Matches a string that contains at least one digit, one lowercase and one uppercase letter, and is at least 8 characters long\nconsole.log(password.test(\"Password123\"));  // true\n\n// Email regex (simplified)\nlet emailRegex = /^[^s@]+@[^s@]+.[^s@]+$/;\nconsole.log(emailRegex.test(\"user@example.com\"));  // true\n\n// URL regex (simplified)\nlet urlRegex = /https?://(www.)?[-a-zA-Z0-9@:%._+~#=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;\nconsole.log(urlRegex.test(\"https://www.example.com\"));  // true\n\n// Regex flags\nlet multilineRegex = /^start/m;  // ^ matches start of each line with m flag\nlet multilineText = \"first line\nstart of second\";\nconsole.log(multilineRegex.test(multilineText));  // true\n\n// Using exec() with global flag\nlet globalRegex = /d+/g;\nlet text = \"There are 3 apples and 4 oranges\";\nlet match;\nwhile ((match = globalRegex.exec(text)) !== null) {\n  console.log(`Found ${match[0]} at index ${match.index}`);\n}\n// Output:\n// Found 3 at index 10\n// Found 4 at index 25\n\n// Regex performance\nlet slowRegex = /^(a+)+$/;  // Can be very slow on certain inputs\nconsole.log(slowRegex.test(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaab\"));  // Be cautious with patterns like this\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"extractPhoneNumbers\" that takes a string of text and returns an array of all phone numbers in the format (xxx) xxx-xxxx. Use a regular expression to find the phone numbers.",
+                        "initialCode": "function extractPhoneNumbers(text) {\n  // Your code here\n}\n\n// Test\nlet text = \"Call me at (123) 456-7890 or (987) 654-3210\";\nconsole.log(extractPhoneNumbers(text));\n",
+                        "validate": "              const isValid = (function() {\n                return JSON.stringify(extractPhoneNumbers(text)) === '[\"(123) 456-7890\",\"(987) 654-3210\"]';\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 50,
+        "icon": {
+            "codePoint": 61904,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "18",
+        "title": "Functional Programming Concepts in JavaScript",
+        "description": "Learn key concepts of functional programming and how to apply them in JavaScript. Understand pure functions, immutability, higher-order functions, and more.",
+        "sections": [
+            {
+                "content": "Functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data. JavaScript, being a multi-paradigm language, supports many functional programming concepts.\n\nKey concepts in functional programming:\n1. Pure functions\n2. Immutability\n3. Higher-order functions\n4. Function composition\n5. Recursion\n6. Currying\n\nLet's start with pure functions and immutability:\n      ",
+                "codeExample": "// Pure function\n// Always returns the same output for the same input, no side effects\nfunction add(a, b) {\n  return a + b;\n}\n\nconsole.log(add(2, 3));  // Always 5\n\n// Impure function (for comparison)\nlet total = 0;\nfunction addToTotal(value) {\n  total += value;  // Side effect: modifies external state\n  return total;\n}\n\nconsole.log(addToTotal(3));  // 3\nconsole.log(addToTotal(3));  // 6 (different result for same input)\n\n// Immutability\nconst originalArray = [1, 2, 3];\n\n// Instead of modifying the original array:\n// originalArray.push(4);  // This would mutate the array\n\n// Create a new array with the added element\nconst newArray = [...originalArray, 4];\n\nconsole.log(originalArray);  // [1, 2, 3]\nconsole.log(newArray);       // [1, 2, 3, 4]\n\n// Working with immutable objects\nconst person = { name: \"Alice\", age: 30 };\n\n// Instead of: person.age = 31;\nconst updatedPerson = { ...person, age: 31 };\n\nconsole.log(person);         // { name: \"Alice\", age: 30 }\nconsole.log(updatedPerson);  // { name: \"Alice\", age: 31 }\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a pure function called \"calculateCircleArea\" that takes the radius as an input and returns the area of the circle. Use Math.PI for the value of π.",
+                        "initialCode": "// Write your function here\n",
+                        "validate": "              const isValid = (function() {\n                return Math.abs(calculateCircleArea(5) - 78.53981633974483) < 0.0001 &&\n                  Math.abs(calculateCircleArea(3) - 28.274333882308138) < 0.0001;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's explore higher-order functions, function composition, recursion, and currying:\n\n1. Higher-order functions: Functions that take other functions as arguments or return functions.\n2. Function composition: Combining two or more functions to produce a new function.\n3. Recursion: A function calling itself until it reaches a base case.\n4. Currying: The technique of translating a function that takes multiple arguments into a sequence of functions, each with a single argument.\n\nThese concepts are powerful tools in functional programming, enabling more modular and reusable code.\n      ",
+                "codeExample": "// Higher-order function\nfunction multiplyBy(factor) {\n  return function(number) {\n    return number * factor;\n  };\n}\n\nconst double = multiplyBy(2);\nconst triple = multiplyBy(3);\n\nconsole.log(double(5));  // 10\nconsole.log(triple(5));  // 15\n\n// Function composition\nconst add5 = x => x + 5;\nconst multiply2 = x => x * 2;\n\nconst compose = (f, g) => x => f(g(x));\nconst add5ThenMultiply2 = compose(multiply2, add5);\n\nconsole.log(add5ThenMultiply2(10));  // (10 + 5) * 2 = 30\n\n// Recursion\nfunction factorial(n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}\n\nconsole.log(factorial(5));  // 120\n\n// Currying\nfunction curryAdd(a) {\n  return function(b) {\n    return function(c) {\n      return a + b + c;\n    };\n  };\n}\n\nconsole.log(curryAdd(1)(2)(3));  // 6\n\n// Using arrow functions for a more concise curry\nconst curriedAdd = a => b => c => a + b + c;\nconsole.log(curriedAdd(1)(2)(3));  // 6\n\n// Practical example: Using map, filter, and reduce\nconst numbers = [1, 2, 3, 4, 5];\n\nconst doubledNumbers = numbers.map(n => n * 2);\nconsole.log(doubledNumbers);  // [2, 4, 6, 8, 10]\n\nconst evenNumbers = numbers.filter(n => n % 2 === 0);\nconsole.log(evenNumbers);  // [2, 4]\n\nconst sum = numbers.reduce((acc, n) => acc + n, 0);\nconsole.log(sum);  // 15\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a higher-order function called \"repeat\" that takes a function and a number n as arguments. It should return a new function that, when called, will call the original function n times and return an array of the results.",
+                        "initialCode": "function repeat(func, n) {\n  // Your code here\n}\n\n// Example usage:\n// const doubleAndRepeat = repeat(x => x * 2, 3);\n// console.log(doubleAndRepeat(5));  // Should output [10, 20, 40]\n",
+                        "validate": "              const isValid = (function() {\n                return JSON.stringify(repeat(x => x * 2, 3)(5)) === '[10,20,40]';\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 55,
+        "icon": {
+            "codePoint": 61760,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "19",
+        "title": "Object-Oriented Programming in JavaScript",
+        "description": "Learn the principles of Object-Oriented Programming and how to implement them in JavaScript. Understand classes, objects, inheritance, and more.",
+        "sections": [
+            {
+                "content": "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of \"objects\", which can contain data and code. The data is in the form of fields (often known as attributes or properties), and the code is in the form of procedures (often known as methods).\n\nKey concepts in OOP:\n1. Classes and Objects\n2. Encapsulation\n3. Inheritance\n4. Polymorphism\n\nLet's start with classes, objects, and encapsulation:\n      ",
+                "codeExample": "// Class definition\nclass Person {\n  constructor(name, age) {\n    this.name = name;\n    this.age = age;\n  }\n\n  // Method\n  sayHello() {\n    console.log(`Hello, my name is ${this.name} and I'm ${this.age} years old.`);\n  }\n\n  // Getter\n  get birthYear() {\n    return new Date().getFullYear() - this.age;\n  }\n\n  // Setter\n  set birthYear(year) {\n    this.age = new Date().getFullYear() - year;\n  }\n}\n\n// Creating objects\nconst person1 = new Person(\"Alice\", 30);\nconst person2 = new Person(\"Bob\", 25);\n\nperson1.sayHello(); // Output: Hello, my name is Alice and I'm 30 years old.\nperson2.sayHello(); // Output: Hello, my name is Bob and I'm 25 years old.\n\nconsole.log(person1.birthYear); // Output: 1993 (assuming current year is 2023)\nperson2.birthYear = 1990;\nconsole.log(person2.age); // Output: 33 (assuming current year is 2023)\n\n// Encapsulation with private fields (ES2022+)\nclass BankAccount {\n  #balance = 0; // Private field\n\n  deposit(amount) {\n    if (amount > 0) {\n      this.#balance += amount;\n      console.log(`Deposited ${amount}. New balance: ${this.#balance}`);\n    }\n  }\n\n  withdraw(amount) {\n    if (amount > 0 && amount <= this.#balance) {\n      this.#balance -= amount;\n      console.log(`Withdrawn ${amount}. New balance: ${this.#balance}`);\n    } else {\n      console.log(\"Insufficient funds\");\n    }\n  }\n\n  getBalance() {\n    return this.#balance;\n  }\n}\n\nconst account = new BankAccount();\naccount.deposit(100);\naccount.withdraw(50);\nconsole.log(account.getBalance()); // 50\n// console.log(account.#balance); // SyntaxError: Private field '#balance' must be declared in an enclosing class\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a class called \"Rectangle\" with properties for width and height. Add methods to calculate the area and perimeter of the rectangle. Then create an instance of the class and calculate its area and perimeter.",
+                        "initialCode": "// Write your class and code here\n",
+                        "validate": "              const isValid = (function() {\n                return rectangle instanceof Rectangle &&\n                  rectangle.calculateArea() === rectangle.width * rectangle.height &&\n                  rectangle.calculatePerimeter() === 2 * (rectangle.width + rectangle.height);\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's explore inheritance and polymorphism:\n\nInheritance allows a class to inherit properties and methods from another class. It promotes code reuse and establishes a relationship between the parent class (superclass) and the child class (subclass).\n\nPolymorphism allows objects of different classes to be treated as objects of a common superclass. In JavaScript, this is often achieved through method overriding.\n      ",
+                "codeExample": "// Base class\nclass Animal {\n  constructor(name) {\n    this.name = name;\n  }\n\n  speak() {\n    console.log(`${this.name} makes a sound.`);\n  }\n}\n\n// Inheritance\nclass Dog extends Animal {\n  constructor(name, breed) {\n    super(name); // Call the parent constructor\n    this.breed = breed;\n  }\n\n  // Method overriding (polymorphism)\n  speak() {\n    console.log(`${this.name} barks.`);\n  }\n\n  // Additional method\n  fetch() {\n    console.log(`${this.name} fetches the ball.`);\n  }\n}\n\nclass Cat extends Animal {\n  // Method overriding (polymorphism)\n  speak() {\n    console.log(`${this.name} meows.`);\n  }\n}\n\n// Creating instances\nconst genericAnimal = new Animal(\"Generic Animal\");\nconst myDog = new Dog(\"Buddy\", \"Golden Retriever\");\nconst myCat = new Cat(\"Whiskers\");\n\n// Demonstrating polymorphism\nfunction makeAnimalSpeak(animal) {\n  animal.speak();\n}\n\nmakeAnimalSpeak(genericAnimal); // Generic Animal makes a sound.\nmakeAnimalSpeak(myDog);         // Buddy barks.\nmakeAnimalSpeak(myCat);         // Whiskers meows.\n\n// Accessing inherited and own properties/methods\nconsole.log(myDog.name);  // Buddy (inherited from Animal)\nconsole.log(myDog.breed); // Golden Retriever\nmyDog.fetch();            // Buddy fetches the ball.\n\n// instanceof operator\nconsole.log(myDog instanceof Dog);    // true\nconsole.log(myDog instanceof Animal); // true\nconsole.log(myCat instanceof Dog);    // false\n\n// Static methods (ES2015+)\nclass MathOperations {\n  static add(x, y) {\n    return x + y;\n  }\n}\n\nconsole.log(MathOperations.add(5, 3)); // 8\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a class hierarchy for shapes. Start with a base class \"Shape\" that has a method to calculate area. Then create two subclasses: \"Circle\" and \"Square\". Implement the area calculation for each shape. Finally, create an array of different shapes and calculate the total area.",
+                        "initialCode": "// Write your classes and code here\n",
+                        "validate": "              const isValid = (function() {\n                return Math.abs(new Circle(5).calculateArea() - 78.54) < 0.01 &&\n                  new Square(4).calculateArea() === 16 &&\n                  typeof totalArea === \"number\" && totalArea > 0;\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 60,
+        "icon": {
+            "codePoint": 61733,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "20",
+        "title": "Local Storage in JavaScript",
+        "description": "Learn how to use Local Storage to persist data in the browser. Understand how to store, retrieve, and manage data using the Web Storage API.",
+        "sections": [
+            {
+                "content": "Local Storage is part of the Web Storage API, which provides mechanisms for storing key-value pairs in a web browser. It allows web applications to store data locally within the user's browser, persisting even when the browser window is closed.\n\nKey points about Local Storage:\n1. Data is stored as strings\n2. It has a larger storage capacity compared to cookies (typically around 5-10MB)\n3. Data persists even when the browser is closed and reopened\n4. It's specific to the protocol and domain of the page\n5. It's synchronous, which means operations are performed immediately\n\nLet's start with basic operations using Local Storage:\n      ",
+                "codeExample": "// Storing data\nlocalStorage.setItem('username', 'JohnDoe');\nlocalStorage.setItem('isLoggedIn', 'true');\nlocalStorage.setItem('lastLogin', new Date().toISOString());\n\n// Retrieving data\nconst username = localStorage.getItem('username');\nconsole.log('Username:', username);  // Output: Username: JohnDoe\n\nconst isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';\nconsole.log('Is logged in:', isLoggedIn);  // Output: Is logged in: true\n\nconst lastLogin = new Date(localStorage.getItem('lastLogin'));\nconsole.log('Last login:', lastLogin);  // Output: Last login: [Date object]\n\n// Updating data\nlocalStorage.setItem('username', 'JaneDoe');\nconsole.log('Updated username:', localStorage.getItem('username'));  // Output: Updated username: JaneDoe\n\n// Removing a specific item\nlocalStorage.removeItem('lastLogin');\nconsole.log('Last login after removal:', localStorage.getItem('lastLogin'));  // Output: Last login after removal: null\n\n// Clearing all data in Local Storage\nlocalStorage.clear();\nconsole.log('Items after clear:', localStorage.length);  // Output: Items after clear: 0\n\n// Checking if a key exists\nif (localStorage.getItem('username') === null) {\n  console.log('Username not found in Local Storage');\n}\n\n// Using the storage event (this would typically be in a different window or tab)\nwindow.addEventListener('storage', function(e) {\n  console.log('Storage changed:', e.key, e.oldValue, e.newValue);\n});\n\n// Note: The storage event doesn't fire in the same window that made the change\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a function called \"saveUserPreferences\" that takes an object with user preferences (e.g., theme, fontSize) and saves it to Local Storage. Then create another function called \"getUserPreferences\" that retrieves and returns these preferences.",
+                        "initialCode": "// Write your functions here\nfunction saveUserPreferences(preferences) {\n  // Your code here\n}\n\nfunction getUserPreferences() {\n  // Your code here\n}\n\n// Test your functions\nconst prefs = { theme: 'dark', fontSize: 16 };\nsaveUserPreferences(prefs);\nconsole.log(getUserPreferences());\n",
+                        "validate": "              const isValid = (function() {\n                return localStorage.getItem(\"userPreferences\") === '{\"theme\":\"dark\",\"fontSize\":16}' &&\n                  JSON.stringify(getUserPreferences()) === '{\"theme\":\"dark\",\"fontSize\":16}';\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's look at some more advanced concepts and best practices when working with Local Storage:\n\n1. Storing complex data structures\n2. Handling errors and exceptions\n3. Using Local Storage with JSON\n4. Local Storage limitations and alternatives\n5. Security considerations\n\nRemember that Local Storage is limited to storing strings, so we need to serialize and deserialize complex data structures.\n      ",
+                "codeExample": "// Storing complex data structures\nconst user = {\n  id: 1,\n  name: 'John Doe',\n  roles: ['admin', 'editor'],\n  settings: {\n    notifications: true,\n    theme: 'dark'\n  }\n};\n\ntry {\n  localStorage.setItem('user', JSON.stringify(user));\n  console.log('User data saved successfully');\n} catch (error) {\n  console.error('Failed to save user data:', error);\n  // Handle quota exceeded error or other exceptions\n}\n\n// Retrieving and parsing complex data\ntry {\n  const storedUser = JSON.parse(localStorage.getItem('user'));\n  console.log('Retrieved user:', storedUser);\n  console.log('User theme:', storedUser.settings.theme);\n} catch (error) {\n  console.error('Failed to retrieve user data:', error);\n  // Handle parsing errors or missing data\n}\n\n// Checking available space (approximate method)\nfunction getLocalStorageSpace() {\n  let total = 0;\n  for (let key in localStorage) {\n    if (localStorage.hasOwnProperty(key)) {\n      total += localStorage[key].length;\n    }\n  }\n  return (total / 1024).toFixed(2) + \" KB\";\n}\n\nconsole.log('Used Local Storage space:', getLocalStorageSpace());\n\n// Local Storage alternatives\n// sessionStorage - similar API, but data is cleared when the page session ends\nsessionStorage.setItem('sessionUser', 'JohnDoe');\nconsole.log('Session user:', sessionStorage.getItem('sessionUser'));\n\n// IndexedDB - for larger amounts of structured data (asynchronous)\n// This is just a simple example, IndexedDB is much more powerful\nconst dbName = 'MyDatabase';\nconst request = indexedDB.open(dbName, 1);\nrequest.onerror = (event) => console.error('IndexedDB error:', event.target.error);\nrequest.onsuccess = (event) => {\n  const db = event.target.result;\n  console.log('IndexedDB opened successfully');\n  // Use the database here\n};\n\n// Security note: Never store sensitive information (like passwords or tokens) in Local Storage\n// It's accessible to any JavaScript code running on the same origin\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a \"ShoppingCart\" class that uses Local Storage to persist items. Implement methods to add items, remove items, clear the cart, and display the current cart contents. Each item should have a name and quantity.",
+                        "initialCode": "class ShoppingCart {\n  constructor() {\n    // Initialize your shopping cart here\n  }\n\n  addItem(name, quantity) {\n    // Implement this method\n  }\n\n  removeItem(name) {\n    // Implement this method\n  }\n\n  clearCart() {\n    // Implement this method\n  }\n\n  displayCart() {\n    // Implement this method\n  }\n}\n\n// Test your implementation\nconst cart = new ShoppingCart();\ncart.addItem('Apple', 3);\ncart.addItem('Banana', 2);\ncart.displayCart();\ncart.removeItem('Apple');\ncart.displayCart();\ncart.clearCart();\ncart.displayCart();\n",
+                        "validate": "              const isValid = (function() {\n                return localStorage.getItem(\"shoppingCart\").includes(\"Banana\") &&\n                  !localStorage.getItem(\"shoppingCart\").includes(\"Apple\") &&\n                  localStorage.getItem(\"shoppingCart\") === \"[]\";\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 45,
+        "icon": {
+            "codePoint": 61822,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "21",
+        "title": "ES6 Classes in JavaScript",
+        "description": "Learn about ES6 class syntax in JavaScript, including class declarations, methods, inheritance, and advanced features.",
+        "sections": [
+            {
+                "content": "ES6 introduced a more intuitive way to create objects and implement inheritance through the `class` keyword. While JavaScript remains prototype-based, the class syntax provides a cleaner and more familiar way to create object-oriented code.\n\nKey concepts of ES6 Classes:\n1. Class declarations\n2. Constructor method\n3. Instance methods\n4. Static methods\n5. Inheritance (extends keyword)\n6. Super keyword\n7. Getters and setters\n\nLet's start with basic class syntax and instance methods:\n      ",
+                "codeExample": "// Basic class declaration\nclass Person {\n  constructor(name, age) {\n    this.name = name;\n    this.age = age;\n  }\n\n  // Instance method\n  sayHello() {\n    console.log(`Hello, my name is ${this.name} and I'm ${this.age} years old.`);\n  }\n\n  // Another instance method\n  haveBirthday() {\n    this.age++;\n    console.log(`Happy birthday! ${this.name} is now ${this.age} years old.`);\n  }\n}\n\n// Creating an instance of the class\nconst john = new Person('John', 30);\njohn.sayHello();  // Output: Hello, my name is John and I'm 30 years old.\njohn.haveBirthday();  // Output: Happy birthday! John is now 31 years old.\n\n// Class expression (less common, but possible)\nconst Animal = class {\n  constructor(name) {\n    this.name = name;\n  }\n\n  speak() {\n    console.log(`${this.name} makes a sound.`);\n  }\n};\n\nconst dog = new Animal('Rex');\ndog.speak();  // Output: Rex makes a sound.\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a class called \"Rectangle\" with a constructor that takes width and height. Add methods to calculate the area and perimeter of the rectangle. Then create an instance and call both methods.",
+                        "initialCode": "// Write your class and code here\n",
+                        "validate": "              const isValid = (function() {\n                return rect instanceof Rectangle &&\n                  rect.calculateArea() === rect.width * rect.height &&\n                  rect.calculatePerimeter() === 2 * (rect.width + rect.height);\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's explore more advanced features of ES6 classes:\n\n1. Static methods\n2. Inheritance with extends and super\n3. Getters and setters\n4. Private fields (a more recent addition to JavaScript)\n\nThese features allow for more complex and flexible class structures.\n      ",
+                "codeExample": "class MathOperations {\n  // Static method\n  static square(x) {\n    return x * x;\n  }\n\n  // Static property (ES2022+)\n  static PI = 3.14159;\n}\n\nconsole.log(MathOperations.square(5));  // Output: 25\nconsole.log(MathOperations.PI);  // Output: 3.14159\n\n// Inheritance\nclass Animal {\n  constructor(name) {\n    this.name = name;\n  }\n\n  speak() {\n    console.log(`${this.name} makes a sound.`);\n  }\n}\n\nclass Dog extends Animal {\n  constructor(name, breed) {\n    super(name);  // Call the parent constructor\n    this.breed = breed;\n  }\n\n  speak() {\n    super.speak();  // Call the parent method\n    console.log(`${this.name} barks.`);\n  }\n}\n\nconst myDog = new Dog('Buddy', 'Golden Retriever');\nmyDog.speak();\n// Output:\n// Buddy makes a sound.\n// Buddy barks.\n\n// Getters and setters\nclass Circle {\n  constructor(radius) {\n    this._radius = radius;\n  }\n\n  get radius() {\n    return this._radius;\n  }\n\n  set radius(value) {\n    if (value > 0) {\n      this._radius = value;\n    } else {\n      console.log('Radius must be positive');\n    }\n  }\n\n  get area() {\n    return Math.PI * this._radius ** 2;\n  }\n}\n\nconst circle = new Circle(5);\nconsole.log(circle.radius);  // Output: 5\ncircle.radius = 7;\nconsole.log(circle.area);  // Output: ~153.94\n\n// Private fields (ES2022+)\nclass BankAccount {\n  #balance = 0;  // Private field\n\n  deposit(amount) {\n    if (amount > 0) {\n      this.#balance += amount;\n      console.log(`Deposited ${amount}. New balance: ${this.#balance}`);\n    }\n  }\n\n  getBalance() {\n    return this.#balance;\n  }\n}\n\nconst account = new BankAccount();\naccount.deposit(100);\nconsole.log(account.getBalance());  // Output: 100\n// console.log(account.#balance);  // This would cause an error\n      ",
+                "exercises": [
+                    {
+                        "question": "Create a \"Vehicle\" class with properties for make and model. Then create a \"Car\" class that extends Vehicle, adding a property for the number of doors. Include a method in Car that displays all the information about the car.",
+                        "initialCode": "// Write your classes here\n",
+                        "validate": "              const isValid = (function() {\n                const car = new Car('Toyota', 'Corolla', 4);\n                const info = car.displayInfo();\n                return info.includes('Toyota') && info.includes('Corolla') && info.includes('4');\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 50,
+        "icon": {
+            "codePoint": 61733,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
+    },
+    {
+        "id": "22",
+        "title": "JavaScript Best Practices and Code Style",
+        "description": "Learn essential coding practices, style conventions, and patterns to write clean, efficient, and maintainable JavaScript code.",
+        "sections": [
+            {
+                "content": "Writing clean, readable, and maintainable code is crucial for professional JavaScript development. Following best practices and consistent code style helps improve code quality, reduces bugs, and enhances collaboration among developers.\n\nKey areas we'll cover:\n1. Naming conventions\n2. Code formatting\n3. Variable declarations\n4. Function best practices\n5. Comments and documentation\n6. Error handling\n7. Performance considerations\n\nLet's start with naming conventions and code formatting:\n      ",
+                "codeExample": "// Naming Conventions\nconst MAX_ITEMS = 100;  // Constants in uppercase\nlet userName = 'John';  // camelCase for variables and function names\nclass UserProfile {}    // PascalCase for class names\n\n// Avoid single-letter names except for loops or short callbacks\nfor (let i = 0; i < 5; i++) {\n  console.log(i);\n}\n\n// Be descriptive with names\n// Bad\nconst yyyymmdstr = moment().format('YYYY/MM/DD');\n// Good\nconst currentDate = moment().format('YYYY/MM/DD');\n\n// Code Formatting\n// Use consistent indentation (2 or 4 spaces, or tabs)\nfunction exampleFunction() {\n  if (condition) {\n    // do something\n  } else {\n    // do something else\n  }\n}\n\n// Place opening braces on the same line\nfunction goodBracing() {\n  return {\n    key: 'value'\n  };\n}\n\n// Use semicolons to end statements\nlet x = 5;\nlet y = 10;\nlet z = x + y;\n\n// Limit line length (often 80-120 characters)\nconst longString = 'This is a very long string that ' +\n  'we break into multiple lines for readability';\n\n// Use single quotes for strings (or be consistent with double quotes)\nconst name = 'Alice';\n\n// Add spaces around operators\nlet sum = a + b;\n\n// No space after function name\nfunction doSomething(param1, param2) {\n  // function body\n}\n\n// Separate logical sections with blank lines\nfunction processData(data) {\n  const processedData = data.map(item => item.toUpperCase());\n  \n  const filteredData = processedData.filter(item => item.length > 3);\n  \n  return filteredData;\n}\n      ",
+                "exercises": [
+                    {
+                        "question": "Refactor the following code to follow best practices for naming conventions and code formatting:",
+                        "initialCode": "function calc(a,b,c){\nif(a>b){\nreturn a*c\n}else{\nreturn b*c\n}}\n\nconst x=calc(5,3,2)\nconsole.log(x)\n",
+                        "validate": "              const isValid = (function() {\n                return code.includes(' = ') && code.includes(' > ') &&\n                  (code.toLowerCase().includes('calculate') || code.toLowerCase().includes('multiply')) &&\n                  (code.includes('  ') || code.includes('    ')) &&\n                  code.includes(';');\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            },
+            {
+                "content": "Now let's explore more best practices related to variable declarations, functions, comments, error handling, and performance:\n\n1. Variable declarations\n2. Function best practices\n3. Comments and documentation\n4. Error handling\n5. Performance considerations\n      ",
+                "codeExample": "// Variable Declarations\n// Use const for values that won't be reassigned\nconst PI = 3.14159;\n// Use let for values that will be reassigned\nlet counter = 0;\n// Avoid var\n// var x = 5;  // Don't use var\n\n// Declare variables at the top of their scope\nfunction processArray(arr) {\n  let sum = 0;\n  let average;\n  \n  for (let i = 0; i < arr.length; i++) {\n    sum += arr[i];\n  }\n  \n  average = sum / arr.length;\n  return average;\n}\n\n// Function Best Practices\n// Use arrow functions for short, non-method functions\nconst square = x => x * x;\n\n// Use default parameters\nfunction greet(name = 'Guest') {\n  console.log(`Hello, ${name}!`);\n}\n\n// Avoid long parameter lists, use objects instead\n// Bad\nfunction createUser(firstName, lastName, age, email, password) {\n  // ...\n}\n// Good\nfunction createUser(userDetails) {\n  const { firstName, lastName, age, email, password } = userDetails;\n  // ...\n}\n\n// Comments and Documentation\n/**\n * Calculates the average of an array of numbers.\n * @param {number[]} numbers - The array of numbers.\n * @returns {number} The average of the numbers.\n */\nfunction calculateAverage(numbers) {\n  const sum = numbers.reduce((acc, num) => acc + num, 0);\n  return sum / numbers.length;\n}\n\n// Use comments to explain why, not what\n// Bad\n// Increment i\ni++;\n\n// Good\n// Move to the next item in the list\ni++;\n\n// Error Handling\nfunction divide(a, b) {\n  if (b === 0) {\n    throw new Error('Division by zero is not allowed');\n  }\n  return a / b;\n}\n\ntry {\n  const result = divide(10, 0);\n  console.log(result);\n} catch (error) {\n  console.error('An error occurred:', error.message);\n}\n\n// Performance Considerations\n// Use array methods instead of loops when possible\nconst numbers = [1, 2, 3, 4, 5];\nconst doubled = numbers.map(num => num * 2);\n\n// Avoid global variables\n// Bad\nlet globalCounter = 0;\n// Good\nfunction counterFunction() {\n  let counter = 0;\n  return function() {\n    return ++counter;\n  };\n}\nconst incrementCounter = counterFunction();\n\n// Use template literals for string concatenation\nconst name = 'Alice';\nconst greeting = `Hello, ${name}!`;\n\n// Avoid using eval()\n// Bad\n// eval('console.log(\"Hello\")');\n\n// Use object and array destructuring\nconst person = { name: 'John', age: 30 };\nconst { name, age } = person;\n\n// Use spread operator for shallow copies\nconst originalArray = [1, 2, 3];\nconst copyArray = [...originalArray];\n      ",
+                "exercises": [
+                    {
+                        "question": "Refactor the following function to follow best practices for error handling, comments, and performance:",
+                        "initialCode": "function processData(data) {\n  var result = [];\n  for (var i = 0; i < data.length; i++) {\n    var item = data[i];\n    if (item != null) {\n      var processedItem = item.toString().toUpperCase();\n      result.push(processedItem);\n    }\n  }\n  return result;\n}\n",
+                        "validate": "              const isValid = (function() {\n                return code.includes('const') &&\n                  code.includes('let') && !code.includes('var') &&\n                  (code.includes('.map(') || code.includes('.filter(')) &&\n                  code.includes('try') && code.includes('catch') &&\n                  (code.includes('//') || code.includes('/*'));\n              })();\n            ",
+                        "isCompleted": false
+                    }
+                ]
+            }
+        ],
+        "difficulty": "Intermediate",
+        "durationMinutes": 60,
+        "icon": {
+            "codePoint": 61740,
+            "fontFamily": "Feather",
+            "fontPackage": "flutter_vector_icons"
+        },
+        "isCompleted": false
     }
 ]
