@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../config/assets.dart';
 import '../../providers/lessons_provider.dart';
 import '../../core.dart';
 
@@ -87,15 +88,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // SvgPicture.asset(
-                //   'assets/vectors/app_logo.svg',
-                //   width: 120,
-                //   height: 120,
-                // ),
-                const Icon(
-                  Icons.code,
-                  size: 120,
-                  color: Colors.white,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    Assets.images.icLauncher,
+                    width: 120,
+                    height: 120,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 Text(

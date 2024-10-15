@@ -21,12 +21,12 @@ JS Master is a Flutter application designed to help users learn JavaScript throu
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/js-master.git
+   git clone https://github.com/TaalayDev/JSMaster.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd js-master
+   cd JSMaster
    ```
 
 3. Install dependencies:
@@ -67,4 +67,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
